@@ -1,10 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<title>Mavo Create!</title>
+    <meta charset="UTF-8">
+    <title>Mavo Create!</title>
+
+    <link rel="stylesheet" href="./index.css" charset="utf-8">
+
+    <!-- Mavo -->
+    <link rel="stylesheet" href="http://mavo.io/mavo/mavo.css"/> 
+    <!-- prism for code flask -->
+    <link href="./prism.css" rel="stylesheet"/>
+    <!-- code flash for syntax highlighting -->
+    <link href="./CodeFlask.js-master/src/codeflask.css" rel="stylesheet"/>
+      
 </head>
+
 <body>
-	
+
+    <div id="html_display_container">
+        <h1>HTML</h1>
+        <div id="html_text">Type HTML body here.</div>
+    </div>
+   
+    <div id="mavo_display_container">
+        <h1>Mavo display</h1>
+        <iframe src="./iFrame.html" id="mavo_display"></iframe>
+    </div>
+   
+
+    <!-- Mavo -->
+    <script src="http://mavo.io/mavo/mavo.js"></script>
+    <!-- prism for code flask -->
+    <script src="./prism.js"></script>
+    <!-- code flash for syntax highlighting -->
+    <script src="./CodeFlask.js-master/src/codeflask.js"></script>
+    <script src="./controller.js" charset="utf-8"></script>
+    
 </body>
+
 </html>
