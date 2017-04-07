@@ -9,18 +9,17 @@
 
     <!-- Mavo -->
     <link rel="stylesheet" href="http://mavo.io/mavo/mavo.css"/> 
-    <!-- prism for code flask -->
-    <link href="./prism.css" rel="stylesheet"/>
-    <!-- code flash for syntax highlighting -->
-    <link href="./CodeFlask.js-master/src/codeflask.css" rel="stylesheet"/>
-      
+  
 </head>
 
 <body>
 
     <div id="html_display_container">
         <h1>HTML</h1>
-        <div id="html_text">Type HTML body here.</div>
+        <textarea id="html_text">Type HTML here</textarea>
+        <p>Or upload an HTML file:</p>
+        <input id="input_html_file" type="file">
+        <button id="upload_input_html_file">Upload</button>
     </div>
    
     <div id="mavo_display_container">
@@ -31,10 +30,7 @@
 
     <!-- Mavo -->
     <script src="http://mavo.io/mavo/mavo.js"></script>
-    <!-- prism for code flask -->
-    <script src="./prism.js"></script>
-    <!-- code flash for syntax highlighting -->
-    <script src="./CodeFlask.js-master/src/codeflask.js"></script>
+
     <script src="./controller.js" charset="utf-8"></script>
     
 </body>

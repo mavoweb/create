@@ -19,7 +19,7 @@
 body {
 	display: flex;
 	margin: 0;
-	min-height: 100vh;
+	min-height: 95vh;
 }
 
 h1 {
@@ -36,24 +36,24 @@ h1 {
 	flex: 1;
 }
 
-#html_display_container > div,
+#html_display_container textarea,
 #mavo_display_container iframe {
 	flex: 1;
 	border: 0;
 	border-top: 1px solid silver;
-}
-
-#html_display_container > div {
-	border-right: 1px solid silver;
+	border-bottom: 1px solid silver;
 }
 
 #html_display_container textarea {
 	height: 100%;
-	
-	/*font: 100%/1.5 Consolas, Monaco, monospace;
-	white-space: nowrap;*/
+	font: 100%/1.5 Consolas, Monaco, monospace;
+	white-space: nowrap;
 }
 
-textarea {
-	
+#mavo_display_container iframe {
+	border-left: 1px solid silver;
+}
+
+#upload_input_html_file {
+	width: 77px;
 }
