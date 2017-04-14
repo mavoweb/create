@@ -5,9 +5,22 @@ var iframe = $("#mavo_display");
 var uploadButton = $("#upload_input_html_file");
 var inputFile = $("#input_html_file");
 
+iframe.onload = function() {
+    if (!iframe.contentWindow.Mavo) {
+        $.create("script", {src: "//mavo.io/mavo/mavo.js", inside: iframe.contentDocument.head });
+        $.create("link", {rel:"stylesheet", href:"//mavo.io/mavo/mavo.css", inside: iframe.contentDocument.head });
+        // $.include(iframe.contentWindow.Mavo, "//mavo.io/mavo/mavo.js").then(function(){
+        //         if (Mavo.inited) {
+        //            Mavo.init();
+        //         }
+        // });
+        textarea.value = iframe.contentDocument.documentElement.outerHTML;
+    }
+    
+
+};
 
 textarea.oninput = function() {
-    iframe.contentWindow.location.href = iframe.src; 
     iframe.srcdoc = textarea.value;
 };
 
@@ -19,7 +32,6 @@ uploadButton.onclick = function() {
         var reader = new FileReader();
 
         reader.onload = function(e) {
-            //set up text in textarea
             textarea.value = reader.result;
             iframe.srcdoc = textarea.value;
         };
