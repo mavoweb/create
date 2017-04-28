@@ -11,17 +11,26 @@
 
 <body>
 
-    <div id="html_display_container">
-        <h1>HTML</h1>
-        <textarea id="html_text">Type HTML here</textarea>
-        <p>Or upload an HTML file:</p>
-        <input id="input_html_file" type="file">
-        <button id="upload_input_html_file">Upload</button>
+    <div id="displays" >
+        <div id="html_display_container">
+            <h1>HTML</h1>
+            <textarea id="html_text">Type HTML here</textarea>
+            <p>Or upload an HTML file:</p>
+            <input id="input_html_file" type="file">
+            <button id="upload_input_html_file">Upload</button>
+        </div>
+       
+        <div id="mavo_display_container">
+            <h1>Mavo display</h1>
+            <iframe src="./iFrame.html" id="mavo_display"></iframe>
+        </div>
     </div>
-   
-    <div id="mavo_display_container">
-        <h1>Mavo display</h1>
-        <iframe src="./iFrame.html" id="mavo_display"></iframe>
+
+    <div id="display_toggle">
+        <p>Change display:</p>
+        <input id="change_to_html_display" type="radio" name="changeDisplay">HTML
+        <input id="change_to_mavo_display" type="radio" name="changeDisplay">Mavo Display
+        <input id="change_to_both_display" type="radio" name="changeDisplay" checked>Both
     </div>
    
 

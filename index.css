@@ -17,9 +17,7 @@
 
 
 body {
-	display: flex;
 	margin: 0;
-	min-height: 95vh;
 }
 
 h1 {
@@ -27,6 +25,11 @@ h1 {
 	padding: .5em .5em;
 	font: bold 220%/1 Helvetica Neue, sans-serif;
 	letter-spacing: -.03em;
+}
+
+#displays {
+	display: flex;
+	min-height: 90vh;
 }
 
 #html_display_container,
