@@ -2,7 +2,6 @@
 
 var textarea = $("#html_text");
 var iframe = $("#mavo_display");
-var uploadButton = $("#upload_input_html_file");
 var inputFile = $("#input_html_file");
 
 var mavoDisplay = $("#mavo_display_container");
@@ -32,7 +31,7 @@ textarea.oninput = function() {
 };
 
 //consulted http://stackoverflow.com/questions/34212240/reading-uploaded-text-file-contents-in-variable
-uploadButton.onclick = function() {
+inputFile.onchange = function() {
 	var file = inputFile.files[0];
 	var textType = /text.*/;
     if (file && file.type.match(textType)) {
@@ -46,7 +45,6 @@ uploadButton.onclick = function() {
     }
     
 };
-
 
 changeToHTMLDisplay.onclick = function() {
     htmlDisplay.style.display = "flex";
