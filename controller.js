@@ -22,8 +22,24 @@ iframe.onload = function() {
         // });
         textarea.value = iframe.contentDocument.documentElement.outerHTML;
     }
-    
 
+    iframe.contentWindow.document.body.onmousemove = function(e) {
+        e.target.style.outline = "5px solid black";
+
+        //listener to remove outline when mouse leaves element
+        e.target.onmouseleave = function(evt) {
+            evt.currentTarget.style.outline = "";
+        }
+
+        //remove outline from parent elements
+        var a =  e.target.parentNode;
+        var els = [];
+        while (a && a.tagName !== "HTML") {
+            console.log(a);
+            a.style.outline = "";
+            a = a.parentNode;
+        }
+    }
 };
 
 textarea.oninput = function() {
