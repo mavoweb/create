@@ -47,12 +47,19 @@ h1 {
 	border-bottom: 1px solid silver;
 }
 
+#template_display_container,
+#mavo_full_display_container {
+	display: flex;
+    flex-flow: column;
+    flex: 1;
+}
+
 #html_display_container textarea {
 	height: 100%;
 	font: 100%/1.5 Consolas, Monaco, monospace;
 	white-space: nowrap;
 }
 
-#mavo_display_container iframe {
+#mavo_display_container {
 	border-left: 1px solid silver;
 }
