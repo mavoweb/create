@@ -11,6 +11,30 @@
 
 <body>
 
+    <div id="modal_container" class="hidden">
+        <div id="modal">
+            
+            <span id="close_modal_button">&#x2715;</span>
+            <h2>What would you like to do to this element?</h2>
+
+
+            <p id="property_description">Giving an element a property name will allow you to edit that element in the Editing mode of your Mavo app.</p>
+            <p id="already_has_property_description">This element already has the property name "<span id="existing_property_name"></span>".</p>
+            <input id="input_property_name" type="text" placeholder="Type Property Name Here"/>
+            <button id="add_property_button">Add property name</button>
+            <button id="change_property_button">Change property name</button>
+            <button id="remove_property_button">Remove property name</button>
+
+            <p id="mv_multiple_description">Making the element repeatable will make it so that when you are in the Editing mode of your Mavo app, you can duplicate the template of this element multiple times, and then fill the templates with different data.</p>
+            <p id="already_has_mv_multiple_description">This element is already repeatable.</p>
+            <button id="add_mv_multiple_button">Make element repeatable</button>
+            <span id="mv-multiple-note">Note that making the element repeatable will only work if the element has a property name.</span>
+            <button id="remove_mv_multiple_button">Remove repeatablability from this element</button>
+
+        </div>
+
+    </div>
+
     <div id="displays" >
         <div id="html_display_container">
             <h1>HTML</h1>
@@ -33,11 +57,11 @@
         </div>
     </div>
 
-    <div id="display_toggle">
-        <p>Change display:</p>
-        <input id="change_to_html_display" type="radio" name="changeDisplay">HTML
-        <input id="change_to_mavo_display" type="radio" name="changeDisplay">Mavo Display
-        <input id="change_to_both_display" type="radio" name="changeDisplay" checked>Both
+    <div id="display_changer">
+        <span>Change display:</span>
+        <input id="show_html_display" type="checkbox" name="changeDisplay" checked>HTML
+        <input id="show_mavo_display" type="checkbox" name="changeDisplay" checked>Mavo Display
+        <input id="show_template_display" type="checkbox" name="changeDisplay" checked>Template
     </div>
    
 

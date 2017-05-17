@@ -6,11 +6,26 @@ var iframeMavo = $("#mavo_display");
 var inputFile = $("#input_html_file");
 
 var mavoDisplay = $("#mavo_display_container");
+var mavoInnerDisplay = $("#mavo_full_display_container");
 var htmlDisplay = $("#html_display_container");
+var templateDisplay = $("#template_display_container");
 
-var changeToHTMLDisplay = $("#change_to_html_display");
-var changeToMavoDisplay = $("#change_to_mavo_display");
-var changeToBothDisplay = $("#change_to_both_display");
+var showHTMLDisplay = $("#show_html_display");
+var showMavoDisplay = $("#show_mavo_display");
+var showTemplateDisplay = $("#show_template_display");
+
+var modalContainer = $("#modal_container");
+var closeModalButton = $("#close_modal_button");
+var alreadyHasPropertyDescription = $("#already_has_property_description");
+var existingPropertyName = $("#existing_property_name");
+var inputPropertyName = $("#input_property_name");
+var addPropertyButton = $("#add_property_button");
+var changePropertyButton = $("#change_property_button");
+var removePropertyButton = $("#remove_property_button");
+var alreadyHasMvMultipleDescription = $("#already_has_mv_multiple_description");
+var addMvMultiple = $("#add_mv_multiple_button");
+var mvMultipleNote = $("#mv-multiple-note");
+var removeMvMultiple = $("#remove_mv_multiple_button");
 
 //create a masterDoc, which will be the point of reference for making any changes
 //each node in the html is assigned a data-mavo-helper-index, which allows us to recognize the same node in
@@ -41,63 +56,8 @@ iframeTemplate.onload = function() {
         };
         e.onclick = function(evt) {
             evt.stopPropagation();
-            evt.target.style.outline = "5px solid red";
-
-            var elemToRemove = iframeTemplate.contentDocument.getElementById("creator-toolbar");
-            if (elemToRemove) {
-                elemToRemove.remove();
-            }
-
-            var nodeInMaster = findSiblingInMasterDoc(evt.target.dataset.mavoHelperIndex);
-            
-            var givePropButton = $.create("button", {id:"give-property", textContent:"Give a Property Name"});
-            var makeMultipleButton = $.create("button", {id:"make-multiple", textContent:"Allow for Multiple Copies"});
-            var insertEquationButton = $.create("button", {id:"insert-equation", textContent:"Insert an Equation"});
-            
-            $.create("div", {id:"creator-toolbar", contents:[givePropButton, makeMultipleButton, insertEquationButton], inside: iframeTemplate.contentDocument.body});
-        
-            givePropButton.onclick = function() {
-                var currentProperty = nodeInMaster.getAttribute("property")
-                if (currentProperty) {
-                    //this node already has a property name; would you like to rename it?
-                } else {
-                    // var newPropNameInput = $.create("input", {type:"text"});
-                    // $.create("div", {id:"new_prop_name_setter", contents:["Choose a property name:", newPropNameInput], inside: iframe.contentDocument.body});
-                    var rand = Math.floor(Math.random() * 1000) +1;
-                    nodeInMaster.setAttribute("property", ""+rand);
-                    //textarea.value = iframeTemplate.contentDocument.documentElement.outerHTML;
-                    var elemToRemove = iframeTemplate.contentDocument.getElementById("creator-toolbar");
-                    evt.target.style.outline = "";
-                    if (elemToRemove) {
-                        elemToRemove.remove();
-                    }
-                    updateAllViews();
-                }
-                
-            };
-
-            makeMultipleButton.onclick = function() {
-                var currentlyMultiple = nodeInMaster.hasAttribute("mv-multiple")
-                if (currentlyMultiple) {
-                    //this item is already a multiple; would you like to undo this?
-                    updateAllViews();
-                } else {
-                    nodeInMaster.setAttribute("mv-multiple", "");
-                    var elemToRemove = iframeTemplate.contentDocument.getElementById("creator-toolbar");
-                    evt.target.style.outline = "";
-                    if (elemToRemove) {
-                        elemToRemove.remove();
-                    }
-                    updateAllViews();
-                }
-                
-            };
-
-            insertEquationButton.onclick = function() {
-                
-            };
-
-        }
+            openModal(evt.target.dataset.mavoHelperIndex);
+        };
     });
 
 };
@@ -146,20 +106,53 @@ inputFile.onchange = function() {
     
 };
 
-changeToHTMLDisplay.onclick = function() {
-    htmlDisplay.style.display = "flex";
-    mavoDisplay.style.display = "none";
+showHTMLDisplay.onclick = function() {
+    changeDisplays();
 };
 
-changeToMavoDisplay.onclick = function() {
-    mavoDisplay.style.display = "flex";
-    htmlDisplay.style.display = "none";
+showMavoDisplay.onclick = function() {
+    changeDisplays();
 };
 
-changeToBothDisplay.onclick = function() {
-    mavoDisplay.style.display = "flex";
-    htmlDisplay.style.display = "flex";
+showTemplateDisplay.onclick = function() {
+    changeDisplays();
 };
+
+var changeDisplays = function() {
+    var wantHTML = showHTMLDisplay.checked;
+    var wantMavo = showMavoDisplay.checked;
+    var wantTemplate = showTemplateDisplay.checked;
+
+    templateDisplay.classList.remove("hidden");
+    htmlDisplay.classList.remove("hidden");
+    mavoInnerDisplay.classList.remove("hidden");
+    mavoDisplay.classList.remove("hidden");
+    mavoDisplay.classList.remove("row_flex_flow");
+    mavoInnerDisplay.classList.remove("extra_left_border");
+
+    if (wantTemplate && wantMavo && wantHTML) {
+        //nothing different, default
+    } else if (wantMavo && wantHTML) {
+        templateDisplay.classList.add("hidden");
+    } else if (wantHTML && wantTemplate) {
+        mavoInnerDisplay.classList.add("hidden");
+    } else if (wantMavo && wantTemplate) {
+        htmlDisplay.classList.add("hidden");
+        mavoDisplay.classList.add("row_flex_flow");
+        mavoInnerDisplay.classList.add("extra_left_border");
+    } else if (wantMavo) {
+        templateDisplay.classList.add("hidden");
+        htmlDisplay.classList.add("hidden");
+    } else if (wantTemplate) {
+        htmlDisplay.classList.add("hidden");
+        mavoInnerDisplay.classList.add("hidden");
+    } else if (wantHTML) {
+        mavoDisplay.classList.add("hidden");
+    } else {
+        htmlDisplay.classList.add("hidden");
+        mavoDisplay.classList.add("hidden");
+    }
+}
 
 
 // Add mavo to the original masterDoc, and update the textarea view
@@ -222,6 +215,127 @@ var findSiblingInMasterDoc = function(index) {
         var siblings = masterDoc.querySelectorAll('[data-mavo-helper-index="'+ index + '"]');
         return siblings[0];
     }
+};
+
+
+//MODAL CODE
+
+closeModalButton.onclick = function() {
+    modalContainer.classList.add("hidden");
+    resetModal();
+};
+
+addPropertyButton.onclick = function() {
+    var index = addPropertyButton.dataset.mavoLinkedIndex;
+    var nodeInMaster = findSiblingInMasterDoc(index);
+    if (nodeInMaster && inputPropertyName.value) {
+        nodeInMaster.setAttribute("property", inputPropertyName.value);
+        updateAllViews();
+    }
+    openModal(index);
+};
+
+changePropertyButton.onclick = function() {
+    var index = changePropertyButton.dataset.mavoLinkedIndex;
+    var nodeInMaster = findSiblingInMasterDoc(index);
+    if (nodeInMaster && inputPropertyName.value) {
+        nodeInMaster.setAttribute("property", inputPropertyName.value);
+        updateAllViews();
+    }
+    openModal(index);
+};
+
+removePropertyButton.onclick = function() {
+    var index = removePropertyButton.dataset.mavoLinkedIndex;
+    var nodeInMaster = findSiblingInMasterDoc(index);
+    if (nodeInMaster) {
+        nodeInMaster.removeAttribute("property");
+        updateAllViews();
+    }
+    openModal(index);
+};
+
+addMvMultiple.onclick = function() {
+    var index = addMvMultiple.dataset.mavoLinkedIndex;
+    var nodeInMaster = findSiblingInMasterDoc(index);
+    if (nodeInMaster) {
+        nodeInMaster.setAttribute("mv-multiple", "");
+        updateAllViews();
+    }
+    openModal(index);
+};
+
+removeMvMultiple.onclick = function() {
+    var index = removeMvMultiple.dataset.mavoLinkedIndex;
+    var nodeInMaster = findSiblingInMasterDoc(index);
+    if (nodeInMaster) {
+        nodeInMaster.removeAttribute("mv-multiple");
+        updateAllViews();
+    }
+    openModal(index);
+};
+
+var openModal = function(index) {
+    var nodeInMaster = findSiblingInMasterDoc(index);
+
+    addPropertyButton.dataset.mavoLinkedIndex = index;
+    changePropertyButton.dataset.mavoLinkedIndex = index;
+    removePropertyButton.dataset.mavoLinkedIndex = index;
+    addMvMultiple.dataset.mavoLinkedIndex = index;
+    removeMvMultiple.dataset.mavoLinkedIndex = index;
+
+    existingPropertyName.value = "";
+    inputPropertyName.value = "";
+
+    var hasProperty = nodeInMaster.hasAttribute("property") && nodeInMaster.getAttribute("property");
+    if (hasProperty) {
+        var currentProperty = nodeInMaster.getAttribute("property")
+        alreadyHasPropertyDescription.classList.remove("hidden");
+        existingPropertyName.innerHTML = currentProperty;
+        
+        changePropertyButton.classList.remove("hidden");
+        addPropertyButton.classList.add("hidden");
+        removePropertyButton.classList.remove("hidden");
+    } else {
+        alreadyHasPropertyDescription.classList.add("hidden");
+        changePropertyButton.classList.add("hidden");
+        addPropertyButton.classList.remove("hidden");
+        removePropertyButton.classList.add("hidden");
+    }
+
+    var hasMvMultiple = nodeInMaster.hasAttribute("mv-multiple") && (nodeInMaster.getAttribute("mv-multiple") == "" || nodeInMaster.getAttribute("mv-multiple") == true);
+    if (hasMvMultiple && hasProperty) {
+        alreadyHasMvMultipleDescription.classList.remove("hidden");
+        addMvMultiple.classList.add("hidden");
+        mvMultipleNote.classList.add("hidden");
+        removeMvMultiple.classList.remove("hidden");
+    } else if (hasProperty) {
+        alreadyHasMvMultipleDescription.classList.add("hidden");
+        addMvMultiple.classList.remove("hidden");
+        addMvMultiple.removeAttribute("disabled");
+        mvMultipleNote.classList.add("hidden");
+        removeMvMultiple.classList.add("hidden");
+    } else { //doesn't have a property
+        alreadyHasMvMultipleDescription.classList.add("hidden");
+        addMvMultiple.classList.remove("hidden");
+        addMvMultiple.setAttribute("disabled", "true");
+        mvMultipleNote.classList.remove("hidden");
+        removeMvMultiple.classList.add("hidden");
+    }
+
+    modalContainer.classList.remove("hidden");
+};
+
+
+var resetModal = function() {
+    addPropertyButton.removeAttribute("data-mavo-linked-index");
+    changePropertyButton.removeAttribute("data-mavo-linked-index");
+    removePropertyButton.removeAttribute("data-mavo-linked-index");
+    addMvMultiple.removeAttribute("data-mavo-linked-index");
+    removeMvMultiple.removeAttribute("data-mavo-linked-index");
+
+    existingPropertyName.value = "";
+    inputPropertyName.value = "";
 };
 
 })();
