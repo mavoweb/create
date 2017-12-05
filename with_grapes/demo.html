@@ -1,0 +1,73 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>GrapesJS Newsletter Editor</title>
+    <link rel="stylesheet" href="./grapesjs/dist/css/grapes.min.css">
+    <link rel="stylesheet" href="./plugins/material.css">
+    <link rel="stylesheet" href="./plugins/tooltip.css">
+    <!-- *<link rel="stylesheet" href="./stylesheets/toastr.min.css"> -->
+    <link rel="stylesheet" href="./plugins/grapesjs-preset-newsletter-master/dist/grapesjs-preset-newsletter.css">
+
+    <script src="./plugins/feather.js"></script>
+    <script src="./grapesjs/dist/grapes.min.js"></script>
+    <!-- <script src="./plugins/ckeditor.js"></script>
+    <script src="./plugins/grapesjs-plugin-ckeditor-master/dist/grapesjs-plugin-ckeditor.min.js"></script> -->
+    <script src="./plugins/grapesjs-preset-newsletter-master/dist/grapesjs-preset-newsletter.min.js"></script>
+    <script src="./plugins/grapesjs-aviary-master/dist/grapesjs-aviary.min.js"></script>
+    <!-- *<script src="./plugins/js/toastr.min.js"></script> -->
+    <script src="./plugins/ajaxable.min.js"></script>
+  </head>
+  <style>
+    body, html{
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+    }
+    iframe {
+        user-select: none;
+        -webkit-user-select: none;
+    }
+
+    .nl-link {
+      color: inherit;
+    }
+    .info-link {
+      text-decoration: none;
+    }
+    #info-cont {
+      line-height: 17px;
+    }
+    .grapesjs-logo {
+      display: block;
+      height: 90px;
+      margin: 0 auto;
+      width: 90px;
+    }
+    .grapesjs-logo path{
+      stroke: #eee !important;
+      stroke-width: 8 !important;
+    }
+
+    #toast-container {
+      font-size: 13px;
+      font-weight: lighter;
+    }
+    #toast-container > div,
+    #toast-container > div:hover{
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+      font-family: Helvetica, sans-serif;
+    }
+    #toast-container > div{
+      opacity: 0.95;
+    }
+  </style>
+  <body>
+
+
+    <div id="gjs" style="height:0px; overflow:hidden"></div>
+
+    <script type="text/javascript" src="./demo.js"></script>
+  </body>
+</html>

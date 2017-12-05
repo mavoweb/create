@@ -1,0 +1,59 @@
+{
+  "name": "grapesjs-style-gradient",
+  "version": "1.0.5",
+  "description": "Add gradient input to the Style Manager in GrapesJS",
+  "main": "dist/grapesjs-style-gradient.min.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/artf/grapesjs-style-gradient.git"
+  },
+  "scripts": {
+    "lint": "eslint src",
+    "v:patch": "npm version --no-git-tag-version patch",
+    "build": "cross-env WEBPACK_ENV=prod && npm run v:patch && webpack",
+    "start": "cross-env WEBPACK_ENV=dev ./node_modules/.bin/webpack-dev-server --progress --colors"
+  },
+  "keywords": [
+    "grapesjs",
+    "plugin",
+    "style",
+    "gradient"
+  ],
+  "author": "Artur Arseniev",
+  "license": "BSD-3-Clause",
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "targets": [
+            "> 1%",
+            "ie 11",
+            "safari 8"
+          ],
+          "useBuiltIns": true
+        }
+      ]
+    ],
+    "plugins": [
+      "transform-object-rest-spread"
+    ]
+  },
+  "peerDependencies": {
+    "grapesjs": "0.x"
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "cross-env": "^5.0.2",
+    "html-webpack-plugin": "^2.30.1",
+    "node-sass": "^4.5.3",
+    "webpack": "^3.1.0",
+    "webpack-dev-server": "^2.5.1"
+  },
+  "dependencies": {
+    "grapick": "^0.1.7"
+  }
+}
