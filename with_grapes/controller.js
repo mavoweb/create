@@ -1,80 +1,102 @@
 (function() {
 
-// var editor = grapesjs.init({
-//     container : '#gjs',
-//     components: '<div class="txt-red">Hello world!</div>',
-//     style: '.txt-red{color: red}',
-// });
-
+// Set up GrapesJS editor with the Newsletter plugin
 var editor = grapesjs.init({
-        showOffsets: 1,
-        noticeOnUnload: 0,
-        container: '#gjs',
-        height: '100%',
-        forceClass: false,
-        avoidInlineStyle: false,
-        fromElement: true,
-        storageManager: { autoload: 0 },
-        styleManager : {
-          sectors: [{
-              name: 'General',
-              open: false,
-              buildProps: ['float', 'display', 'position', 'top', 'right', 'left', 'bottom']
-            },{
-              name: 'Dimension',
-              open: false,
-              buildProps: ['width', 'height', 'max-width', 'min-height', 'margin', 'padding'],
-            },{
-              name: 'Typography',
-              open: false,
-              buildProps: ['font-family', 'font-size', 'font-weight', 'letter-spacing', 'color', 'line-height', 'text-shadow'],
-            },{
-              name: 'Decorations',
-              open: false,
-              buildProps: ['border-radius-c', 'background-color', 'border-radius', 'border', 'box-shadow', 'background'],
-            },{
-              name: 'Extra',
-              open: false,
-              buildProps: ['transition', 'perspective', 'transform'],
-            }
-          ],
-        },
-      });
+  clearOnRender: true,
+  height: '100%',
+  storageManager: {
+    id: 'gjs-nl-',
+  },
+  container : '#gjs',
+  fromElement: true,
+  plugins: ['gjs-preset-newsletter'],
+  pluginsOpts: {
+    'gjs-preset-newsletter': {
+      modalLabelImport: 'Paste all your code here below and click import',
+      modalLabelExport: 'Copy the code and use it wherever you want',
+      codeViewerTheme: 'material',
+      //defaultTemplate: templateImport,
+      importPlaceholder: '<table class="table"><tr><td class="cell">Hello world!</td></tr></table>',
+      cellStyle: {
+        'font-size': '12px',
+        'font-weight': 300,
+        'vertical-align': 'top',
+        color: 'rgb(111, 119, 125)',
+        margin: 0,
+        padding: 0,
+      }
+    },
+  }
+});
 
-editor.BlockManager.add('testBlock', {
-    label: 'Block',
-    attributes: { class:'gjs-fonts gjs-f-b1'},
-    content: `<div style="padding-top:50px; padding-bottom:50px; text-align:center">Test block</div>`
-})
+// for debugging
+// window.editor = editor;
 
+//add property and mv-multiple
 var comps = editor.DomComponents;
-var originalText = comps.getType('text');
-
-comps.addType('text', {
-    model: originalText.model.extend({
-        defaults: Object.assign({}, originalText.model.prototype.defaults, {
-          traits: [
-            {
+for (var i = 0; i < comps.componentTypes.length; i++) {
+    var compType = comps.componentTypes[i].id;
+    var originalComp = comps.getType(compType);
+    var givenTraits = originalComp.model.prototype.defaults.traits;
+    var newTraits = givenTraits.slice();
+    newTraits.push({
               type: 'input',
-              label: 'Property Name',
+              label: 'Mavo Name',
               name: 'property',
-            },
-            {
+            })
+    newTraits.push({
               type: 'checkbox',
               label: 'Repeatable',
               name: 'mv-multiple',
-            }],
+            });
+   
+    comps.addType(compType, {
+        model: originalComp.model.extend({
+            defaults: Object.assign({}, originalComp.model.prototype.defaults, {
+              traits: newTraits,
+            }),
         }),
-  },
-  {
-    isComponent: function(el) {
-      if(el.tagName == 'DIV'){
-        return {type: 'text'};
+        view: originalComp.view
+    });
+
+};
+
+
+var pnm = editor.Panels;
+var cmdm = editor.Commands;
+var md = editor.Modal;
+
+
+//Erase canvas button
+pnm.addButton('options', {
+  id: 'clear-all',
+  className: 'fa fa-trash icon-blank',
+  attributes: {title: 'Empty canvas'},
+  command: {
+    run: function(editor, sender) {
+      sender && sender.set('active', false);
+      if(confirm('Are you sure to clean the canvas?')){
+        editor.DomComponents.clear();
+        setTimeout(function(){
+          localStorage.clear()
+        },0)
       }
-    },
-  }),
-  view: originalText.view
+    }
+  }
 });
+
+
+// Beautify tooltips
+var titles = document.querySelectorAll('*[title]');
+for (var i = 0; i < titles.length; i++) {
+  var el = titles[i];
+  var title = el.getAttribute('title');
+  title = title ? title.trim(): '';
+  if(!title)
+    break;
+  el.setAttribute('data-tooltip', title);
+  el.setAttribute('title', '');
+}
 
 
 })();
