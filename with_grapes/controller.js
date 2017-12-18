@@ -1,5 +1,9 @@
 (function() {
 
+var iframeMavo = $("#mavo-display");
+var mavoDisplay = $("#mavo-display-container");
+mavoDisplay.classList.add("hidden");
+
 // Set up GrapesJS editor with the Newsletter plugin
 var editor = grapesjs.init({
   clearOnRender: true,
@@ -71,18 +75,64 @@ var md = editor.Modal;
 pnm.addButton('options', {
   id: 'clear-all',
   className: 'fa fa-trash icon-blank',
-  attributes: {title: 'Empty canvas'},
+  attributes: {title: 'Show Mavo view'},
   command: {
     run: function(editor, sender) {
-      sender && sender.set('active', false);
-      if(confirm('Are you sure to clean the canvas?')){
-        editor.DomComponents.clear();
-        setTimeout(function(){
-          localStorage.clear()
+        sender && sender.set('active', false);
+        if(confirm('Are you sure to clean the canvas?')){
+            editor.DomComponents.clear();
+            setTimeout(function(){
+              localStorage.clear()
         },0)
       }
     }
   }
+});
+
+iframeMavo.onload = function() {
+    // add Mavo to page if it's not there already
+    if (!iframeMavo.contentWindow.Mavo) {
+        $.create("script", {src: "https://get.mavo.io/mavo.js", inside: iframeMavo.contentDocument.head });
+        $.create("link", {rel:"stylesheet", href:"https://get.mavo.io/mavo.css", inside: iframeMavo.contentDocument.head });
+        iframeMavo.contentDocument.body.setAttribute("mv-app", "");
+        iframeMavo.contentDocument.body.setAttribute("mv-storage", "local");
+    }
+};
+
+//Mavo preview button
+pnm.addButton('options', {
+  id: 'show-mavo-preview',
+  className: 'fa fa-eye',
+  command: {
+    run: function(editor, sender) {
+        sender && sender.set('active', false);
+
+        var html = editor.runCommand('gjs-get-inlined-html');
+        iframeMavo.srcdoc = html;
+
+        mavoDisplay.classList.remove("hidden");
+    }
+  },
+  attributes: {
+    'title': 'Mavo Preview',
+    'data-tooltip-pos': 'bottom',
+  },
+});
+
+//hide Mavo preview
+pnm.addButton('options', {
+  id: 'hide-mavo-preview',
+  className: 'fa fa-eye-slash',
+  command: {
+    run: function(editor, sender) {
+        sender && sender.set('active', false);
+        mavoDisplay.classList.add("hidden");
+    }
+  },
+  attributes: {
+    'title': 'Hide Mavo Preview',
+    'data-tooltip-pos': 'bottom',
+  },
 });
 
 

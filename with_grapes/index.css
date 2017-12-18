@@ -1,0 +1,25 @@
+body, html {
+	height: 100%;
+	margin: 0;
+}
+
+body {
+	display: flex;
+}
+
+.hidden {
+	display: none !important;
+}
+
+#gjs {
+	width: 100%;
+}
+
+#mavo-display-container {
+	width: 100%;
+	display: flex;
+}
+
+#mavo-display {
+	width:100%;
+}

@@ -16,23 +16,22 @@
     <script src="./plugins/grapesjs-aviary-master/dist/grapesjs-aviary.min.js"></script>
     <!-- *<script src="./plugins/js/toastr.min.js"></script> -->
     <script src="./plugins/ajaxable.min.js"></script>
-    <style>
-      body,
-      html {
-        height: 100%;
-        margin: 0;
-      }
-    </style>
 </head>
 
 <body>
-    <div id="gjs" style="height:0px; overflow:hidden;">
+    <div id="gjs">
         <!-- <div>
             <div property="firstProp">Has a property name</div>
             <div style="color: blue;">Add a property name</div>
         </div> -->
     </div>
+    <div id="mavo-display-container">
+        <iframe src="./iFrame.html" id="mavo-display"></iframe>
+    </div>
 
+    <link rel="stylesheet" href="./index.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blissfuljs/1.0.4/bliss.min.js"></script>
     <script src="./controller.js"></script>
+
 </body>
 </html>
