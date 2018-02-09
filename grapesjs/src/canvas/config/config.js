@@ -30,5 +30,15 @@ module.exports = {
    *  return ComponentModel.getName();
    * }
    */
-  customBadgeLabel: ''
+  customBadgeLabel: function(ComponentModel) {
+    var propertyName;
+    var property = ComponentModel.get('traits').where({ name: 'property' })[0];
+    if (property) {
+      propertyName = property.get('value');
+    }
+    if (propertyName && propertyName !== '') {
+      return ComponentModel.getName() + ' - ' + propertyName;
+    }
+    return ComponentModel.getName();
+  }
 };
