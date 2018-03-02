@@ -1,7 +1,7 @@
 (function() {
 
-var iframeMavo = $("#mavo-display");
-var mavoDisplay = $("#mavo-display-container");
+var iframeMavo = document.getElementById("mavo-display");
+var mavoDisplay = document.getElementById("mavo-display-container");
 mavoDisplay.classList.add("hidden");
 
 // Set up GrapesJS editor with the Newsletter plugin
@@ -35,12 +35,12 @@ var editor = grapesjs.init({
 
 // for debugging
 // window.editor = editor;
+domComponents = editor.DomComponents;
 
 //add property and mv-multiple
-var comps = editor.DomComponents;
-for (var i = 0; i < comps.componentTypes.length; i++) {
-    var compType = comps.componentTypes[i].id;
-    var originalComp = comps.getType(compType);
+for (var i = 0; i < domComponents.componentTypes.length; i++) {
+    var compType = domComponents.componentTypes[i].id;
+    var originalComp = domComponents.getType(compType);
     var givenTraits = originalComp.model.prototype.defaults.traits;
     var newTraits = givenTraits.slice();
     newTraits.push({
@@ -54,7 +54,7 @@ for (var i = 0; i < comps.componentTypes.length; i++) {
               name: 'mv-multiple',
             });
    
-    comps.addType(compType, {
+    domComponents.addType(compType, {
         model: originalComp.model.extend({
             defaults: Object.assign({}, originalComp.model.prototype.defaults, {
               traits: newTraits,
@@ -62,8 +62,8 @@ for (var i = 0; i < comps.componentTypes.length; i++) {
         }),
         view: originalComp.view
     });
-
 };
+
 
 
 var pnm = editor.Panels;
@@ -92,8 +92,15 @@ pnm.addButton('options', {
 iframeMavo.onload = function() {
     // add Mavo to page if it's not there already
     if (!iframeMavo.contentWindow.Mavo) {
-        $.create("script", {src: "https://get.mavo.io/mavo.js", inside: iframeMavo.contentDocument.head });
-        $.create("link", {rel:"stylesheet", href:"https://get.mavo.io/mavo.css", inside: iframeMavo.contentDocument.head });
+        var script = iframeMavo.contentWindow.document.createElement("script");
+        script.src =  "https://get.mavo.io/mavo.js";
+        iframeMavo.contentWindow.document.head.appendChild(script);
+
+        var link = iframeMavo.contentWindow.document.createElement("link");
+        link.href =  "https://get.mavo.io/mavo.css";
+        link.rel = "stylesheet";
+        iframeMavo.contentWindow.document.head.appendChild(link);
+
         iframeMavo.contentDocument.body.setAttribute("mv-app", "");
         iframeMavo.contentDocument.body.setAttribute("mv-storage", "local");
     }
