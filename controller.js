@@ -4,6 +4,9 @@ var iframeMavo = document.getElementById("mavo-display");
 var mavoDisplay = document.getElementById("mavo-display-container");
 mavoDisplay.classList.add("hidden");
 
+var mvStorage = 'local';
+var mvApp = '';
+
 // Set up GrapesJS editor with the Newsletter plugin
 var editor = grapesjs.init({
   clearOnRender: true,
@@ -47,7 +50,7 @@ for (var i = 0; i < domComponents.componentTypes.length; i++) {
               type: 'input',
               label: 'Mavo Name',
               name: 'property',
-            })
+            });
     newTraits.push({
               type: 'checkbox',
               label: 'Repeatable',
@@ -90,6 +93,8 @@ pnm.addButton('options', {
 });
 
 iframeMavo.onload = function() {
+    iframeMavo.contentDocument.body.setAttribute("mv-app", mvApp);
+    iframeMavo.contentDocument.body.setAttribute("mv-storage", mvStorage);
     // add Mavo to page if it's not there already
     if (!iframeMavo.contentWindow.Mavo) {
         var script = iframeMavo.contentWindow.document.createElement("script");
@@ -100,10 +105,8 @@ iframeMavo.onload = function() {
         link.href =  "https://get.mavo.io/mavo.css";
         link.rel = "stylesheet";
         iframeMavo.contentWindow.document.head.appendChild(link);
-
-        iframeMavo.contentDocument.body.setAttribute("mv-app", "");
-        iframeMavo.contentDocument.body.setAttribute("mv-storage", "local");
     }
+
 };
 
 //Mavo preview button
@@ -142,6 +145,39 @@ pnm.addButton('options', {
   },
 });
 
+//Edit Header information
+pnm.addButton('options', {
+  id: 'edit-meta',
+  className: 'fa fa-gear',
+  command: {
+    run: function(editor, sender) {
+        sender && sender.set('active', false);
+        $("#storage-setting").val(mvStorage);
+        $("#mv-app-setting").val(mvApp);
+        $('#settingsModal').modal('show');
+    }
+  },
+  attributes: {
+    'title': 'Edit Meta Info',
+    'data-tooltip-pos': 'bottom',
+  },
+});
+
+
+$("#save-settings-modal").on("click", function(e){
+  e.preventDefault();
+  var storage = $("#storage-setting").val();
+  var app = $("#mv-app-setting").val();
+  app ? mvApp = app : mvApp = '';
+  storage ? mvStorage = storage : mvStorage = 'local';
+  $(this).prev().click();
+});
+
+$('#settingsModal').on('hidden.bs.modal', function (e) {
+  $("#storage-setting").value = '';
+  $("#mv-app-setting").value = '';
+
+});
 
 // Beautify tooltips
 var titles = document.querySelectorAll('*[title]');

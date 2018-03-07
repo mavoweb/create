@@ -17,6 +17,32 @@
 
 <body>
     <div id="gjs"></div>
+
+    <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Mavo Settings</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>Mavo App Name:
+                        <input type="text" id="mv-app-setting">
+                    </div>
+                    <div>Mavo Storage location:
+                        <input type="text" id="storage-setting">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="save-settings-modal">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="mavo-display-container">
         <iframe src="./iFrame.html" id="mavo-display"></iframe>
     </div>
