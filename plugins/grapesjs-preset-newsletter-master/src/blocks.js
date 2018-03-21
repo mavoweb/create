@@ -13,9 +13,15 @@ define(function() {
       cellStyleStr += `${prop}: ${cellStyle[prop]}; `;
     }
     bm.getAll().reset();
+    bm.add('button', {
+      label: opt.buttonBlkLabel,
+      category: 'Content',
+      content: '<a class="button">Button</a>',
+      attributes: {class:'gjs-fonts gjs-f-button'}
+    });
     bm.add('sect100', {
       label: opt.sect100BlkLabel,
-      category: opt.categoryLabel,
+      category: 'Structure',
       attributes: {class:'gjs-fonts gjs-f-b1'},
       content: `<table style="${tableStyleStr}">
         <tr>
@@ -25,7 +31,7 @@ define(function() {
     });
     bm.add('sect50', {
       label: opt.sect50BlkLabel,
-      category: opt.categoryLabel,
+      category: 'Structure',
       attributes: {class:'gjs-fonts gjs-f-b2'},
       content: `<table style="${tableStyleStr}">
         <tr>
@@ -36,7 +42,7 @@ define(function() {
     });
     bm.add('sect30', {
       label: opt.sect30BlkLabel,
-      category: opt.categoryLabel,
+      category: 'Structure',
       attributes: {class:'gjs-fonts gjs-f-b3'},
       content: `<table style="${tableStyleStr}">
         <tr>
@@ -48,7 +54,7 @@ define(function() {
     });
     bm.add('sect37', {
       label: opt.sect37BlkLabel,
-      category: opt.categoryLabel,
+      category: 'Structure',
       attributes: {class:'gjs-fonts gjs-f-b37'},
       content: `<table style="${tableStyleStr}">
         <tr>
@@ -57,15 +63,9 @@ define(function() {
         </tr>
         </table>`,
     });
-    bm.add('button', {
-      label: opt.buttonBlkLabel,
-      category: opt.categoryLabel,
-      content: '<a class="button">Button</a>',
-      attributes: {class:'gjs-fonts gjs-f-button'}
-    });
     bm.add('divider', {
       label: opt.dividerBlkLabel,
-      category: opt.categoryLabel,
+      category: 'Structure',
       content: `<table style="width: 100%; margin-top: 10px; margin-bottom: 10px;">
         <tr>
           <td class="divider"></td>
@@ -81,7 +81,7 @@ define(function() {
     });
     bm.add('text', {
       label: opt.textBlkLabel,
-      category: opt.categoryLabel,
+      category: 'Content',
       attributes: {class:'gjs-fonts gjs-f-text'},
       content: {
        type: 'text',
@@ -92,13 +92,13 @@ define(function() {
     });
     bm.add('text-sect', {
       label: opt.textSectionBlkLabel,
-      category: opt.categoryLabel,
+      category: 'Content',
       content: '<h1 class="heading">Insert title here</h1><p class="paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>',
       attributes: {class:'gjs-fonts gjs-f-h1p'}
     });
     bm.add('image', {
       label: opt.imageBlkLabel,
-      category: opt.categoryLabel,
+      category: 'Content',
       attributes: {class:'gjs-fonts gjs-f-image'},
       content: {
         type:'image',
@@ -108,13 +108,13 @@ define(function() {
     });
     bm.add('quote', {
       label: opt.quoteBlkLabel,
-      category: opt.categoryLabel,
+      category: 'Content',
       content: '<blockquote class="quote">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore ipsum dolor sit</blockquote>',
       attributes: {class:'fa fa-quote-right'}
     });
     bm.add('link', {
       label: opt.linkBlkLabel,
-      category: opt.categoryLabel,
+      category: 'Content',
       attributes: {class:'fa fa-link'},
       content: {
         type: 'link',
@@ -124,7 +124,7 @@ define(function() {
     });
     bm.add('link-block', {
       label: opt.linkBlockBlkLabel,
-      category: opt.categoryLabel,
+      category: 'Content',
       attributes: {class:'fa fa-link'},
       content: {
         type: 'link',
@@ -156,7 +156,7 @@ define(function() {
       </table>`;
     bm.add('grid-items', {
       label: opt.gridItemsBlkLabel,
-      category: opt.categoryLabel,
+      category: 'Compound Items',
       content: `<table class="grid-item-row">
         <tr>
           <td class="grid-item-cell2-l">${gridItem}</td>
@@ -185,7 +185,7 @@ define(function() {
       </table>`;
     bm.add('list-items', {
       label: opt.listItemsBlkLabel,
-      category: opt.categoryLabel,
+      category: 'Compound Items',
       content: listItem + listItem,
       attributes: {class:'fa fa-th-list'}
     });
