@@ -51,12 +51,31 @@ for (var i = 0; i < domComponents.componentTypes.length; i++) {
               label: 'Mavo Name',
               name: 'property',
             });
+    var mvAttributeOptions = [];
+    for (var j = 0; j < newTraits.length; j++) {
+      var trait = newTraits[j];
+      var newOption;
+      if (trait.name && trait.label) {
+        newOption = {value: trait.name, name:trait.label};
+      } else {
+        newOption = {value: trait, name:trait};
+      }
+
+      mvAttributeOptions.push(newOption);
+    }
+    mvAttributeOptions.push({value:"none", name: "Text Content"});
+    newTraits.push({
+              type: 'select',
+              label: 'Mavo Target',
+              name: 'mv-attribute',
+              options: mvAttributeOptions
+            });
     newTraits.push({
               type: 'checkbox',
               label: 'Repeatable',
               name: 'mv-multiple',
             });
-   
+
     domComponents.addType(compType, {
         model: originalComp.model.extend({
             defaults: Object.assign({}, originalComp.model.prototype.defaults, {
