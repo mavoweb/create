@@ -8,20 +8,11 @@ module.exports = Component.extend({
     droppable: false,
     editable: true,
     script: function() {
-      // var that = this;
-      // console.log("that:");
-      // console.log(that);
-      // console.log(this instanceof Element);
-      $(this).popover(); //WORKS kind of
       var showingExpressionsGui = '{[ showingExpressionsGui ]}';
 
       var showExpressionGui = function() {
         if (showingExpressionsGui) {
           console.log('show');
-          // $(that).popover();
-          // $(that).popover('show');
-          // that.popover();
-          // that.popover('show');
         }
       };
 
@@ -29,8 +20,6 @@ module.exports = Component.extend({
         if (showingExpressionsGui) {
           console.log('hide');
         }
-        // console.log("inMODEL");
-        // console.log(this);
       };
 
       var checkEventAndRun = function(e) {
@@ -42,12 +31,6 @@ module.exports = Component.extend({
           showingExpressionsGui = false;
         }
       };
-      // console.log("inMODEL2");
-      // var jq = window.jQuery;
-      // console.log(jq);
-      // var bootstrap_enabled = (typeof $().emulateTransitionEnd == 'function');
-      // console.log(bootstrap_enabled);
-      // console.log(this);
 
       this.addEventListener('keyup', checkEventAndRun);
       this.addEventListener('blur', hideExpressionGui);

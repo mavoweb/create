@@ -215,19 +215,4 @@ for (var i = 0; i < titles.length; i++) {
 }
 
 
-// Add popover to text elements when they are added to the page
-editor.on('component:add', component => {
-  // console.log(component)
-  //data-toggle="popover" title="Popover Header" data-content="Some content inside the popover"
-  if (component.is('text')) {
-    component.addAttributes({
-      'data-toggle': "popover",
-      'title': 'Some popover title',
-      'data-content': 'Some popover content'
-    });
-    $('[data-toggle="popover"]').popover();
-  }
-});
-
-
 })();

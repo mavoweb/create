@@ -22688,64 +22688,41 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 var Component = __webpack_require__(4);
 
 module.exports = Component.extend({
-    defaults: _extends({}, Component.prototype.defaults, {
-        type: 'text',
-        showingExpressionsGui: false,
-        droppable: false,
-        editable: true,
-        script: function script() {
-            var that = this;
-            // console.log("that:");
-            // console.log(that);
-            // console.log(this instanceof Element);
-            // $(this).popover();
-            var showingExpressionsGui = '{[ showingExpressionsGui ]}';
+  defaults: _extends({}, Component.prototype.defaults, {
+    type: 'text',
+    showingExpressionsGui: false,
+    droppable: false,
+    editable: true,
+    script: function script() {
+      var showingExpressionsGui = '{[ showingExpressionsGui ]}';
 
-            var showExpressionGui = function showExpressionGui() {
-                var that = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : that;
-
-                if (showingExpressionsGui) {
-                    console.log("show");
-                    $(that).popover();
-                    $(that).popover('show');
-                    // that.popover();
-                    // that.popover('show');
-                }
-            };
-
-            var hideExpressionGui = function hideExpressionGui() {
-                var that = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : that;
-
-                if (showingExpressionsGui) {
-                    console.log("hide");
-                }
-                // console.log("inMODEL");
-                // console.log(this);
-            };
-
-            var checkEventAndRun = function checkEventAndRun(e) {
-                if (e.which == 219 && !showingExpressionsGui) {
-                    showingExpressionsGui = true;
-                    showExpressionGui();
-                } else if (e.which == 221 && showingExpressionsGui) {
-                    hideExpressionGui();
-                    showingExpressionsGui = false;
-                }
-            };
-
-            // console.log("inMODEL2");
-            // var jq = window.jQuery;
-            // console.log(jq);
-            // var bootstrap_enabled = (typeof $().emulateTransitionEnd == 'function');
-            // console.log(bootstrap_enabled);
-            // console.log(this);
-
-            this.addEventListener('keyup', checkEventAndRun);
-            this.addEventListener('blur', hideExpressionGui);
-            this.addEventListener('focus', showExpressionGui);
+      var showExpressionGui = function showExpressionGui() {
+        if (showingExpressionsGui) {
+          console.log('show');
         }
-    })
+      };
 
+      var hideExpressionGui = function hideExpressionGui() {
+        if (showingExpressionsGui) {
+          console.log('hide');
+        }
+      };
+
+      var checkEventAndRun = function checkEventAndRun(e) {
+        if (e.which == 219 && !showingExpressionsGui) {
+          showingExpressionsGui = true;
+          showExpressionGui();
+        } else if (e.which == 221 && showingExpressionsGui) {
+          hideExpressionGui();
+          showingExpressionsGui = false;
+        }
+      };
+
+      this.addEventListener('keyup', checkEventAndRun);
+      this.addEventListener('blur', hideExpressionGui);
+      this.addEventListener('focus', showExpressionGui);
+    }
+  })
 });
 
 /***/ }),
@@ -22771,7 +22748,20 @@ module.exports = ComponentView.extend({
     var em = this.em;
     this.listenTo(model, 'focus active', this.enableEditing);
     this.listenTo(model, 'change:content', this.updateContent);
+    this.listenTo(model, 'change:showingExpressionsGui', this.openPopover);
+    var config = this.config;
+    config.modal && (this.modal = config.modal);
     this.rte = em && em.get('RichTextEditor');
+  },
+
+
+  /**
+   * Open popover for editing expressions
+   * @param  {Object}  e  Event
+   * @private
+   * */
+  openPopover: function openPopover(e) {
+    console.log("happening");
   },
 
 
@@ -22780,16 +22770,6 @@ module.exports = ComponentView.extend({
    * @private
    * */
   enableEditing: function enableEditing() {
-    // console.log("inVIEW");
-    // console.log(this);
-    // console.log("in view $el");
-    // console.log(typeof this.$el[0]);
-    // var bootstrap_enabled = (typeof $().emulateTransitionEnd == 'function');
-    // console.log(bootstrap_enabled);
-
-    // console.log(this.$el[0].popover());
-
-
     var rte = this.rte;
 
     if (this.rteEnabled || !this.model.get('editable')) {
@@ -23752,7 +23732,7 @@ module.exports = function () {
     plugins: plugins,
 
     // Will be replaced on build
-    version: '0.14.31',
+    version: '0.14.35',
 
     /**
      * Initializes an editor based on passed options
