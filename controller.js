@@ -16,6 +16,10 @@ var editor = grapesjs.init({
   },
   container : '#gjs',
   fromElement: true,
+  components: '<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>',
+  canvas: {
+    scripts: ['https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js','https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js']
+  },
   plugins: ['gjs-preset-newsletter'],
   pluginsOpts: {
     'gjs-preset-newsletter': {
@@ -209,6 +213,21 @@ for (var i = 0; i < titles.length; i++) {
   el.setAttribute('data-tooltip', title);
   el.setAttribute('title', '');
 }
+
+
+// Add popover to text elements when they are added to the page
+editor.on('component:add', component => {
+  // console.log(component)
+  //data-toggle="popover" title="Popover Header" data-content="Some content inside the popover"
+  if (component.is('text')) {
+    component.addAttributes({
+      'data-toggle': "popover",
+      'title': 'Some popover title',
+      'data-content': 'Some popover content'
+    });
+    $('[data-toggle="popover"]').popover();
+  }
+});
 
 
 })();

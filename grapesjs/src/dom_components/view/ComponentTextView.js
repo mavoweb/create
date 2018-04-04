@@ -22,6 +22,15 @@ module.exports = ComponentView.extend({
    * @private
    * */
   enableEditing() {
+    // console.log("inVIEW");
+    // console.log(this);
+    // console.log("in view $el");
+    // console.log(typeof this.$el[0]);
+    // var bootstrap_enabled = (typeof $().emulateTransitionEnd == 'function');
+    // console.log(bootstrap_enabled);
+
+    // console.log(this.$el[0].popover());
+
     const rte = this.rte;
 
     if (this.rteEnabled || !this.model.get('editable')) {
