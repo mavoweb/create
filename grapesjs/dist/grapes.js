@@ -22690,38 +22690,8 @@ var Component = __webpack_require__(4);
 module.exports = Component.extend({
   defaults: _extends({}, Component.prototype.defaults, {
     type: 'text',
-    showingExpressionsGui: false,
     droppable: false,
-    editable: true,
-    script: function script() {
-      var showingExpressionsGui = '{[ showingExpressionsGui ]}';
-
-      var showExpressionGui = function showExpressionGui() {
-        if (showingExpressionsGui) {
-          console.log('show');
-        }
-      };
-
-      var hideExpressionGui = function hideExpressionGui() {
-        if (showingExpressionsGui) {
-          console.log('hide');
-        }
-      };
-
-      var checkEventAndRun = function checkEventAndRun(e) {
-        if (e.which == 219 && !showingExpressionsGui) {
-          showingExpressionsGui = true;
-          showExpressionGui();
-        } else if (e.which == 221 && showingExpressionsGui) {
-          hideExpressionGui();
-          showingExpressionsGui = false;
-        }
-      };
-
-      this.addEventListener('keyup', checkEventAndRun);
-      this.addEventListener('blur', hideExpressionGui);
-      this.addEventListener('focus', showExpressionGui);
-    }
+    editable: true
   })
 });
 
@@ -22748,20 +22718,7 @@ module.exports = ComponentView.extend({
     var em = this.em;
     this.listenTo(model, 'focus active', this.enableEditing);
     this.listenTo(model, 'change:content', this.updateContent);
-    this.listenTo(model, 'change:showingExpressionsGui', this.openPopover);
-    var config = this.config;
-    config.modal && (this.modal = config.modal);
     this.rte = em && em.get('RichTextEditor');
-  },
-
-
-  /**
-   * Open popover for editing expressions
-   * @param  {Object}  e  Event
-   * @private
-   * */
-  openPopover: function openPopover(e) {
-    console.log("happening");
   },
 
 
@@ -23732,7 +23689,7 @@ module.exports = function () {
     plugins: plugins,
 
     // Will be replaced on build
-    version: '0.14.35',
+    version: '0.14.36',
 
     /**
      * Initializes an editor based on passed options

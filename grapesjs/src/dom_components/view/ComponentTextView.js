@@ -14,19 +14,7 @@ module.exports = ComponentView.extend({
     const em = this.em;
     this.listenTo(model, 'focus active', this.enableEditing);
     this.listenTo(model, 'change:content', this.updateContent);
-    this.listenTo(model, 'change:showingExpressionsGui', this.openPopover);
-    const config = this.config;
-    config.modal && (this.modal = config.modal);
     this.rte = em && em.get('RichTextEditor');
-  },
-
-  /**
-   * Open popover for editing expressions
-   * @param  {Object}  e  Event
-   * @private
-   * */
-  openPopover(e) {
-    console.log('happening');
   },
 
   /**
