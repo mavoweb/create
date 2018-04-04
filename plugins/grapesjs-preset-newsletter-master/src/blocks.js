@@ -15,57 +15,57 @@ define(function() {
     bm.getAll().reset();
     bm.add('button', {
       label: opt.buttonBlkLabel,
-      category: 'Content',
+      category: 'Basic Content',
       content: '<a class="button">Button</a>',
       attributes: {class:'gjs-fonts gjs-f-button'}
     });
     bm.add('sect100', {
       label: opt.sect100BlkLabel,
-      category: 'Structure',
+      category: 'Structured Content',
       attributes: {class:'gjs-fonts gjs-f-b1'},
       content: `<table style="${tableStyleStr}">
         <tr>
-          <td style="${cellStyleStr}"></td>
+          <td style="${cellStyleStr}"><p>Insert text or other content here</p></td>
         </tr>
         </table>`,
     });
     bm.add('sect50', {
       label: opt.sect50BlkLabel,
-      category: 'Structure',
+      category: 'Structured Content',
       attributes: {class:'gjs-fonts gjs-f-b2'},
       content: `<table style="${tableStyleStr}">
         <tr>
-          <td style="${cellStyleStr} width: 50%"></td>
-          <td style="${cellStyleStr} width: 50%"></td>
+          <td style="${cellStyleStr} width: 50%"><p>Insert text or other content here</p></td>
+          <td style="${cellStyleStr} width: 50%"><p>Insert text or other content here</p></td>
         </tr>
         </table>`,
     });
     bm.add('sect30', {
       label: opt.sect30BlkLabel,
-      category: 'Structure',
+      category: 'Structured Content',
       attributes: {class:'gjs-fonts gjs-f-b3'},
       content: `<table style="${tableStyleStr}">
         <tr>
-          <td style="${cellStyleStr} width: 33.3333%"></td>
-          <td style="${cellStyleStr} width: 33.3333%"></td>
-          <td style="${cellStyleStr} width: 33.3333%"></td>
+          <td style="${cellStyleStr} width: 33.3333%"><p>Insert text or other content here</p></td>
+          <td style="${cellStyleStr} width: 33.3333%"><p>Insert text or other content here</p></td>
+          <td style="${cellStyleStr} width: 33.3333%"><p>Insert text or other content here</p></td>
         </tr>
         </table>`,
     });
     bm.add('sect37', {
       label: opt.sect37BlkLabel,
-      category: 'Structure',
+      category: 'Structured Content',
       attributes: {class:'gjs-fonts gjs-f-b37'},
       content: `<table style="${tableStyleStr}">
         <tr>
-          <td style="${cellStyleStr} width:30%"></td>
-          <td style="${cellStyleStr} width:70%"></td>
+          <td style="${cellStyleStr} width:30%"><p>Insert text or other content here</p></td>
+          <td style="${cellStyleStr} width:70%"><p>Insert text or other content here</p></td>
         </tr>
         </table>`,
     });
     bm.add('divider', {
       label: opt.dividerBlkLabel,
-      category: 'Structure',
+      category: 'Structured Content',
       content: `<table style="width: 100%; margin-top: 10px; margin-bottom: 10px;">
         <tr>
           <td class="divider"></td>
@@ -81,7 +81,7 @@ define(function() {
     });
     bm.add('text', {
       label: opt.textBlkLabel,
-      category: 'Content',
+      category: 'Basic Content',
       attributes: {class:'gjs-fonts gjs-f-text'},
       content: {
        type: 'text',
@@ -92,13 +92,13 @@ define(function() {
     });
     bm.add('text-sect', {
       label: opt.textSectionBlkLabel,
-      category: 'Content',
+      category: 'Basic Content',
       content: '<h1 class="heading">Insert title here</h1><p class="paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>',
       attributes: {class:'gjs-fonts gjs-f-h1p'}
     });
     bm.add('image', {
       label: opt.imageBlkLabel,
-      category: 'Content',
+      category: 'Basic Content',
       attributes: {class:'gjs-fonts gjs-f-image'},
       content: {
         type:'image',
@@ -108,13 +108,13 @@ define(function() {
     });
     bm.add('quote', {
       label: opt.quoteBlkLabel,
-      category: 'Content',
+      category: 'Basic Content',
       content: '<blockquote class="quote">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore ipsum dolor sit</blockquote>',
       attributes: {class:'fa fa-quote-right'}
     });
     bm.add('link', {
       label: opt.linkBlkLabel,
-      category: 'Content',
+      category: 'Basic Content',
       attributes: {class:'fa fa-link'},
       content: {
         type: 'link',
@@ -124,7 +124,7 @@ define(function() {
     });
     bm.add('link-block', {
       label: opt.linkBlockBlkLabel,
-      category: 'Content',
+      category: 'Basic Content',
       attributes: {class:'fa fa-link'},
       content: {
         type: 'link',
@@ -156,7 +156,7 @@ define(function() {
       </table>`;
     bm.add('grid-items', {
       label: opt.gridItemsBlkLabel,
-      category: 'Compound Items',
+      category: 'Structured Content',
       content: `<table class="grid-item-row">
         <tr>
           <td class="grid-item-cell2-l">${gridItem}</td>
@@ -185,7 +185,7 @@ define(function() {
       </table>`;
     bm.add('list-items', {
       label: opt.listItemsBlkLabel,
-      category: 'Compound Items',
+      category: 'Structured Content',
       content: listItem + listItem,
       attributes: {class:'fa fa-th-list'}
     });
