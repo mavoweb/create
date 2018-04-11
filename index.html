@@ -43,8 +43,49 @@
         </div>
     </div>
 
+    <div class="modal fade" id="expressionsModal" tabindex="-1" role="dialog" aria-labelledby="expressionsModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create an Expression</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>[
+                        <input type="text" id="expression-text-box" placeholder="Start typing you expression here" data-toggle="popover" data-html="true" data-placement="bottom" style="width:95%">
+                        ]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="mavo-display-container">
         <iframe src="./iFrame.html" id="mavo-display"></iframe>
+    </div>
+
+    <div id="popover-title-html" style="display:none;">
+        <table class="popver-table">
+            <tr>
+                <td>Operators</td>
+                <td>Special Words</td>
+                <td>Functions</td>
+                <td class="hide-if-no-props">Mavo Elements</td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="popover-content-html" style="display:none;">
+        <table class="popver-table">
+            <tr>
+                <td><div id="expr-operators-container"></div></td>
+                <td><div id="expr-specials-container"></div></td>
+                <td><div id="expr-functions-container"></div></td>
+                <td class="hide-if-no-props"><div id="expr-properties-container"></div></td>
+            </tr>
+        </table>
     </div>
 
     <link rel="stylesheet" href="./index.css">

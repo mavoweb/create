@@ -4,8 +4,16 @@ var iframeMavo = document.getElementById("mavo-display");
 var mavoDisplay = document.getElementById("mavo-display-container");
 mavoDisplay.classList.add("hidden");
 
+var functionsContainer = $('#expr-functions-container');
+var operatorsContainer = $('#expr-operators-container');
+var specialsContainer = $('#expr-specials-container');
+var propsContainer = $('#expr-properties-container');
+
 var mvStorage = 'local';
 var mvApp = '';
+
+$("[data-toggle=popover]").popover();
+
 
 // Set up GrapesJS editor with the Newsletter plugin
 var editor = grapesjs.init({
@@ -199,7 +207,6 @@ $("#save-settings-modal").on("click", function(e){
 $('#settingsModal').on('hidden.bs.modal', function (e) {
   $("#storage-setting").value = '';
   $("#mv-app-setting").value = '';
-
 });
 
 // Beautify tooltips
@@ -213,6 +220,115 @@ for (var i = 0; i < titles.length; i++) {
   el.setAttribute('data-tooltip', title);
   el.setAttribute('title', '');
 }
+
+
+pnm.addButton('options', {
+  id: 'make-expressions',
+  className: 'fa fa-square',
+  command: {
+    run: function(editor, sender) {
+        sender && sender.set('active', false);
+        $("#expression-text-box").val("");
+        $("#expression-text-box").popover();
+        // $("#expression-text-box").popover({
+        //   template: '<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-header" style="display:none;"></h3><div class="popover-body"></div></div>',
+        // });
+        var popover = $('#expression-text-box').data('bs.popover');
+        var popoverContent = $('#popover-content-html').html();
+        popover.config.content = popoverContent;
+        var popoverTitle = $('#popover-title-html').html();
+        popover.config.title = popoverTitle;
+        var props = getAllMavoProperties()
+        propsContainer.empty();
+        for (var i=0; i<props.length; i++) {
+          var prop = props[i];
+          propsContainer.append(`<div class="expr-title" data-value="`+ prop + `">` + prop +`</div>`);
+        }
+        $('#expressionsModal').modal('show');
+        // $("#expression-text-box").popover('show');
+    }
+  },
+  attributes: {
+    'title': 'Create Expressions',
+    'data-tooltip-pos': 'bottom',
+  },
+});
+
+// $('.expr-function').on("click", function() {
+//   console.log(this)
+// });
+var parseExpressionsJsonAndSet = function() {
+  $.getJSON('./expressions.json', function(data) {
+      var expData = data['term'];
+      for (var i=0; i<expData.length; i++) {
+        var obj = expData[i]
+        var role = obj['role'];
+        var majorText = obj['name'];
+        var minorText = cutDescription(obj['description']);
+        var valueText = obj['name'];
+        if (role == 'function') {
+          var args = obj['argument'];
+          majorText = majorText + '(';
+          for (var k=0; k<args.length; k++) {
+            majorText = majorText + args[k]['name'] + ', '
+          }
+          majorText = majorText.substring(0, majorText.length-2) + ')';
+          majorText = majorText + ')';
+          valueText = valueText + '()';
+          functionsContainer.append(`<div class="expr-title" data-value="`+ valueText + `">` + majorText +`<p class="expr-description"> `+minorText+`</p></div>`);
+        } else if (role == 'operator') {
+          var unary = obj['unary'];
+          if (unary) {
+            majorText = majorText + 'a'
+          } else {
+            majorText = 'a ' + majorText + ' b'
+          }
+          operatorsContainer.append(`<div class="expr-title" data-value="`+ valueText + `">` + majorText +`<p class="expr-description"> `+minorText+`</p></div>`);
+        } else if (role == 'special') {
+          specialsContainer.append(`<div class="expr-title" data-value="`+ valueText + `">` + majorText +`<p class="expr-description"> `+minorText+`</p></div>`);
+        }
+
+      }
+
+  });
+}
+
+parseExpressionsJsonAndSet();
+
+var cutDescription = function(description) {
+  var current = (' ' + description).slice(1);
+  if (current.indexOf('\n') > -1) {
+    current = current.substring(0, current.indexOf('\n'));
+  }
+  if (current.indexOf('.') > -1) {
+    current = current.substring(0, current.indexOf('.'));
+  }
+  return current;
+}
+
+var getAllMavoProperties = function() {
+  // var thattt = $("[property]");
+  // var thisss = document.querySelectorAll('[property]');
+  // console.log(thisss);
+  // console.log(thattt);
+  var canvas = editor.Canvas.getBody();
+  var elements = canvas.querySelectorAll('[property]');
+  var properties = [];
+  for (var i=0; i<elements.length; i++) {
+    var element = elements[i];
+    properties.push(element.getAttribute('property'));
+  }
+  return properties;
+}
+
+$('body').on('click', '.expr-title', function () {
+  var dataValue = $(this).data('value');
+  var currentText = $("#expression-text-box").val();
+  $("#expression-text-box").val(currentText + " " + dataValue);
+  $("#expression-text-box").focus();
+});
+
+
 
 
 })();

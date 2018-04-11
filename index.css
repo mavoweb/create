@@ -23,3 +23,51 @@ body {
 #mavo-display {
 	width:100%;
 }
+
+.expr-title {
+	font-size: 14;
+	color: black;
+}
+
+.expr-title:hover {
+	background-color: gray;
+}
+
+.expr-description {
+	color: gray;
+	font-size: 10;
+}
+
+.expr-title:hover .expr-description{
+	color: black;
+}
+
+.popover {
+	max-width: 80%
+}
+
+.popver-table {
+	width:95%;
+}
+
+.popver-table td {
+	width:25%;
+	max-height: 100%;
+}
+
+#expr-operators-container {
+	height: 250px;
+    overflow: auto;
+}
+#expr-specials-container {
+	height: 250px;
+    overflow: auto;
+}
+#expr-functions-container {
+	height: 250px;
+    overflow: auto;
+}
+#expr-properties-container {
+	height: 250px;
+    overflow: auto;
+}
