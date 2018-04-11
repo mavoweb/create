@@ -230,9 +230,6 @@ pnm.addButton('options', {
         sender && sender.set('active', false);
         $("#expression-text-box").val("");
         $("#expression-text-box").popover();
-        // $("#expression-text-box").popover({
-        //   template: '<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-header" style="display:none;"></h3><div class="popover-body"></div></div>',
-        // });
         var popover = $('#expression-text-box').data('bs.popover');
         var popoverContent = $('#popover-content-html').html();
         popover.config.content = popoverContent;
@@ -245,7 +242,6 @@ pnm.addButton('options', {
           propsContainer.append(`<div class="expr-title" data-value="`+ prop + `">` + prop +`</div>`);
         }
         $('#expressionsModal').modal('show');
-        // $("#expression-text-box").popover('show');
     }
   },
   attributes: {
@@ -254,9 +250,6 @@ pnm.addButton('options', {
   },
 });
 
-// $('.expr-function').on("click", function() {
-//   console.log(this)
-// });
 var parseExpressionsJsonAndSet = function() {
   $.getJSON('./expressions.json', function(data) {
       var expData = data['term'];
@@ -307,10 +300,6 @@ var cutDescription = function(description) {
 }
 
 var getAllMavoProperties = function() {
-  // var thattt = $("[property]");
-  // var thisss = document.querySelectorAll('[property]');
-  // console.log(thisss);
-  // console.log(thattt);
   var canvas = editor.Canvas.getBody();
   var elements = canvas.querySelectorAll('[property]');
   var properties = [];
@@ -327,8 +316,6 @@ $('body').on('click', '.expr-title', function () {
   $("#expression-text-box").val(currentText + " " + dataValue);
   $("#expression-text-box").focus();
 });
-
-
 
 
 })();
