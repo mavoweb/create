@@ -14,7 +14,7 @@ define(function() {
     let optPanel = pnm.getPanel('options');
     pnm.addButton('options', {
       id: opt.cmdOpenImport,
-      className: 'fa fa-download',
+      className: 'fa fa-upload',
       command: opt.cmdOpenImport,
       attributes: {[tltAttr]: opt.modalTitleImport},
     });

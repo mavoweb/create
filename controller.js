@@ -155,6 +155,46 @@ pnm.addButton('options', {
 });
 
 
+var downloadFile = function(htmlContent) {
+  var element = document.createElement('a');
+
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(htmlContent));
+  element.setAttribute('download', 'myMavoApp.html');
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+
+pnm.addButton('options', {
+  id: 'download-html',
+  className: 'fa fa-download',
+  command: {
+    run: function(editor, sender) {
+        sender && sender.set('active', false);
+
+        var html = editor.runCommand('gjs-get-inlined-html');
+        var fullHTML = `<html>
+        <head>
+          <script src="https://get.mavo.io/mavo.js"></script>
+          <link rel="stylesheet" href="https://get.mavo.io/mavo.css">
+        </head>
+        <body mv-app="`+ mvApp +`" mv-storage="`+mvStorage+`">`+html+`</body>
+        </html>`;
+        downloadFile(fullHTML);
+
+    }
+  },
+  attributes: {
+    'title': 'Download Your Webpage',
+    'data-tooltip-pos': 'bottom',
+  },
+});
+
+
 //Edit Header information
 pnm.addButton('options', {
   id: 'edit-meta',
