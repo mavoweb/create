@@ -1,9 +1,5 @@
 (function() {
 
-var iframeMavo = document.getElementById("mavo-display");
-var mavoDisplay = document.getElementById("mavo-display-container");
-mavoDisplay.classList.add("hidden");
-
 var functionsContainer = $('#expr-functions-container');
 var operatorsContainer = $('#expr-operators-container');
 var specialsContainer = $('#expr-specials-container');
@@ -123,22 +119,6 @@ pnm.addButton('options', {
   }
 });
 
-iframeMavo.onload = function() {
-    iframeMavo.contentDocument.body.setAttribute("mv-app", mvApp);
-    iframeMavo.contentDocument.body.setAttribute("mv-storage", mvStorage);
-    // add Mavo to page if it's not there already
-    if (!iframeMavo.contentWindow.Mavo) {
-        var script = iframeMavo.contentWindow.document.createElement("script");
-        script.src =  "https://get.mavo.io/mavo.js";
-        iframeMavo.contentWindow.document.head.appendChild(script);
-
-        var link = iframeMavo.contentWindow.document.createElement("link");
-        link.href =  "https://get.mavo.io/mavo.css";
-        link.rel = "stylesheet";
-        iframeMavo.contentWindow.document.head.appendChild(link);
-    }
-
-};
 
 //Mavo preview button
 pnm.addButton('options', {
@@ -149,9 +129,23 @@ pnm.addButton('options', {
         sender && sender.set('active', false);
 
         var html = editor.runCommand('gjs-get-inlined-html');
-        iframeMavo.srcdoc = html;
+        
+        var newWindow = window.open();
 
-        mavoDisplay.classList.remove("hidden");
+        var script = newWindow.document.createElement("script");
+        script.src =  "https://get.mavo.io/mavo.js";
+        newWindow.document.head.appendChild(script);
+
+        var link = newWindow.document.createElement("link");
+        link.href =  "https://get.mavo.io/mavo.css";
+        link.rel = "stylesheet";
+        newWindow.document.head.appendChild(link);
+
+        newWindow.document.body.setAttribute("mv-app", mvApp);
+        newWindow.document.body.setAttribute("mv-storage", mvStorage);
+
+        newWindow.document.body.innerHTML = html;
+
     }
   },
   attributes: {
@@ -160,21 +154,6 @@ pnm.addButton('options', {
   },
 });
 
-//hide Mavo preview
-pnm.addButton('options', {
-  id: 'hide-mavo-preview',
-  className: 'fa fa-eye-slash',
-  command: {
-    run: function(editor, sender) {
-        sender && sender.set('active', false);
-        mavoDisplay.classList.add("hidden");
-    }
-  },
-  attributes: {
-    'title': 'Hide Mavo Preview',
-    'data-tooltip-pos': 'bottom',
-  },
-});
 
 //Edit Header information
 pnm.addButton('options', {
