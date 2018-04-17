@@ -5,7 +5,10 @@ var operatorsContainer = $('#expr-operators-container');
 var specialsContainer = $('#expr-specials-container');
 var propsContainer = $('#expr-properties-container');
 
-var mvStorage = 'local';
+var mvStorage = 'local'; //what goes into mv-app
+var mvStorageChoice = 'local'; //the choice (value) from the dropdown menu in the modal
+var mvStorageDetail; //for github and dropbox, what the user enters in the box in the modal
+
 var mvApp = '';
 
 $("[data-toggle=popover]").popover();
@@ -195,38 +198,114 @@ pnm.addButton('options', {
 });
 
 
-//Edit Header information
+//Edit mv-app and mv-storage
 pnm.addButton('options', {
-  id: 'edit-meta',
+  id: 'edit-mavo-info',
   className: 'fa fa-gear',
   command: {
     run: function(editor, sender) {
         sender && sender.set('active', false);
-        $("#storage-setting").val(mvStorage);
         $("#mv-app-setting").val(mvApp);
+
+        $("#storage-setting-dropdown").val(mvStorageChoice);
+        setStorageDescription(mvStorageChoice);
+        setStorageDetailInput(mvStorageChoice);
+
         $('#settingsModal').modal('show');
     }
   },
   attributes: {
-    'title': 'Edit Meta Info',
+    'title': 'Edit Mavo Settings',
     'data-tooltip-pos': 'bottom',
   },
 });
 
+var setStorageDescription = function(storageType) {
+  var descriptor = "";
+  if (storageType == "local") {
+    descriptor = "This option stores your Mavo data locally in the browser.";
+  } else if (storageType == "github") {
+    descriptor = "To store your data on Github, you need to create a github account. Once you do, include your github username below:";
+  } else if (storageType == "dropbox") {
+    descriptor = 'To store your data on Dropbox, create an empty file with a .json extension on Dropbox. Then, in the Dropbox application, click "Share"; copy the link and paste it below:';
+  } else if (storageType == "none") {
+    descriptor = "Choosing this option means that your Mavo data will not be stored anywhere.";
+  } else {
+    descriptor = "";
+  }
+  $("#storage-setting-description").text(descriptor);
+};
 
+var setStorageDetailInput = function(storageType, initialSetup=false) {
+  var detailInput = $("#storage-setting-detail");
+
+  if (storageType == "github" || storageType == "dropbox") {
+    //add placeholder
+    if (storageType == "github") {
+      detailInput.attr("placeholder", "Your Github username");
+      if (mvStorageDetail && mvStorageChoice == "github") {
+        detailInput.val(mvStorageDetail);
+      }
+    } else if (storageType == "dropbox") {
+      detailInput.attr("placeholder", "Your Dropbox sharing link");
+      if (mvStorageDetail && mvStorageChoice == "dropbox") {
+        detailInput.val(mvStorageDetail);
+      }
+    }
+    detailInput.removeClass("hidden");
+
+  } else {
+    detailInput.addClass("hidden");
+    detailInput.val("");
+  }
+};
+
+//on changing the settings modal dropdown
+$('#storage-setting').on('change', function () {
+  var newStorageChoice = $("#storage-setting-dropdown option:selected").val();
+  setStorageDescription(newStorageChoice);
+  setStorageDetailInput(newStorageChoice);
+
+});
+
+//when the user hits "Save" for saving mv-app and mv-storage stuff
 $("#save-settings-modal").on("click", function(e){
   e.preventDefault();
-  var storage = $("#storage-setting").val();
+  var storageDropdown = $("#storage-setting-dropdown").val();
+  if (storageDropdown == "github" || storageDropdown == "dropbox") {
+    var detailInput = $("#storage-setting-detail").val();
+    if (detailInput && detailInput.replace(/\s/g,'').length > 0) {
+      if (storageDropdown == "github") {
+        mvStorage = "https://github.com/" + detailInput.replace(/\s/g,'');
+      } else if (storageDropdown == "dropbox") {
+        //just the URL for dropbox
+        mvStorage = detailInput;
+      }
+      mvStorageChoice = storageDropdown;
+      mvStorageDetail = detailInput;
+    } else {
+      //invalid entry, so divert to local
+      mvStorage = "local";
+      mvStorageChoice = 'local';
+      mvStorageDetail = null;
+    }
+  } else {
+    mvStorage = storageDropdown;
+    mvStorageChoice = storageDropdown;
+    mvStorageDetail = null;
+  }
+
   var app = $("#mv-app-setting").val();
   app ? mvApp = app : mvApp = '';
-  storage ? mvStorage = storage : mvStorage = 'local';
+
   $(this).prev().click();
 });
 
 $('#settingsModal').on('hidden.bs.modal', function (e) {
-  $("#storage-setting").value = '';
   $("#mv-app-setting").value = '';
+  $("#storage-setting-detail").val('');
 });
+
 
 // Beautify tooltips
 var titles = document.querySelectorAll('*[title]');
@@ -240,7 +319,7 @@ for (var i = 0; i < titles.length; i++) {
   el.setAttribute('title', '');
 }
 
-
+//expressions modal
 pnm.addButton('options', {
   id: 'make-expressions',
   className: 'fa fa-square',

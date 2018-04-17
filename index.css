@@ -71,3 +71,15 @@ body {
 	height: 250px;
     overflow: auto;
 }
+
+#storage-setting {
+	margin-top: 25px;
+}
+
+#storage-setting-description {
+	font-size: small;
+}
+
+#storage-setting-detail {
+	width: 100%;
+}

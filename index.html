@@ -28,11 +28,19 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div>Mavo App Name:
+                    <div>Name your Mavo App:
                         <input type="text" id="mv-app-setting">
                     </div>
-                    <div>Mavo Storage location:
-                        <input type="text" id="storage-setting">
+                    <div id="storage-setting">Where do you want to store your Mavo data?
+                        <select id="storage-setting-dropdown">
+                            <option value="local">Browser</option>
+                            <option value="github">Github</option>
+                            <option value="dropbox">Dropbox</option>
+                            <option value="none">None</option>
+                        </select>
+
+                        <div><p id="storage-setting-description"></p></div>
+                        <input class="hidden" type="text" id="storage-setting-detail"></input>
                     </div>
                 </div>
                 <div class="modal-footer">
