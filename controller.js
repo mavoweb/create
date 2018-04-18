@@ -47,6 +47,11 @@ var editor = grapesjs.init({
   }
 });
 
+var pnm = editor.Panels;
+var cmdm = editor.Commands;
+var md = editor.Modal;
+
+
 // for debugging
 // window.editor = editor;
 domComponents = editor.DomComponents;
@@ -98,11 +103,6 @@ for (var i = 0; i < domComponents.componentTypes.length; i++) {
     });
 };
 
-
-
-var pnm = editor.Panels;
-var cmdm = editor.Commands;
-var md = editor.Modal;
 
 
 //Erase canvas button
@@ -307,6 +307,9 @@ $('#settingsModal').on('hidden.bs.modal', function (e) {
   $("#storage-setting-detail").val('');
 });
 
+[['open-sm', 'Style Manager'], ['open-tm', 'Trait Manager'], ['open-layers', 'Layers'], ['open-blocks', 'Blocks']].forEach(function(item) {
+  pnm.getButton('views', item[0]).set('attributes', {title: item[1], 'data-tooltip-pos': 'bottom'});
+});
 
 // Beautify tooltips
 var titles = document.querySelectorAll('*[title]');

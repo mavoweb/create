@@ -83,3 +83,11 @@ body {
 #storage-setting-detail {
 	width: 100%;
 }
+
+.gjs-pn-commands {
+	display:none;
+}
+
+.gjs-pn-options {
+	margin-right:30px;
+}
