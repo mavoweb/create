@@ -51,6 +51,42 @@ var pnm = editor.Panels;
 var cmdm = editor.Commands;
 var md = editor.Modal;
 
+editor.on('load', function() {
+  var gjs$ = grapesjs.$;
+
+  // Load and show settings and style manager
+  var openTmBtn = pnm.getButton('views', 'open-tm');
+  openTmBtn && openTmBtn.set('active', 1);
+  var openSm = pnm.getButton('views', 'open-sm');
+  openSm && openSm.set('active', 1);
+
+  // Add Settings Sector
+  var traitsSector = gjs$('<div class="gjs-sm-sector no-select">'+
+    '<div class="gjs-sm-title"><span class="icon-settings fa fa-cog"></span> Settings</div>' +
+    '<div class="gjs-sm-properties" style="display: none;"></div></div>');
+  var traitsProps = traitsSector.find('.gjs-sm-properties');
+  traitsProps.append(gjs$('.gjs-trt-traits'));
+  gjs$('.gjs-sm-sectors').before(traitsSector);
+  traitsSector.find('.gjs-sm-title').on('click', function(){
+    var traitStyle = traitsProps.get(0).style;
+    var hidden = traitStyle.display == 'none';
+    if (hidden) {
+      traitStyle.display = 'block';
+    } else {
+      traitStyle.display = 'none';
+    }
+  });
+
+  // Open block manager
+  var openBlocksBtn = editor.Panels.getButton('views', 'open-blocks');
+  openBlocksBtn && openBlocksBtn.set('active', 1);
+
+  // Move Ad
+  $('#gjs').append($('.ad-cont'));
+  
+  pnm.getButton('views', 'open-tm').set('attributes', {style: 'display:none;'});
+
+});
 
 // for debugging
 // window.editor = editor;
