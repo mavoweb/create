@@ -13,11 +13,22 @@ define(function() {
       cellStyleStr += `${prop}: ${cellStyle[prop]}; `;
     }
     bm.getAll().reset();
-    bm.add('button', {
-      label: opt.buttonBlkLabel,
+    // bm.add('button', {
+    //   label: opt.buttonBlkLabel,
+    //   category: 'Basic Content',
+    //   content: '<a class="button">Button</a>',
+    //   attributes: {class:'gjs-fonts gjs-f-button'}
+    // });
+    bm.add('text', {
+      label: opt.textBlkLabel,
       category: 'Basic Content',
-      content: '<a class="button">Button</a>',
-      attributes: {class:'gjs-fonts gjs-f-button'}
+      attributes: {class:'gjs-fonts gjs-f-text'},
+      content: {
+       type: 'text',
+       content: 'Insert your text here',
+       style: { padding: '10px' },
+       activeOnRender: 1
+      },
     });
     bm.add('sect100', {
       label: opt.sect100BlkLabel,
@@ -25,7 +36,7 @@ define(function() {
       attributes: {class:'gjs-fonts gjs-f-b1'},
       content: `<table style="${tableStyleStr}">
         <tr>
-          <td style="${cellStyleStr}"><p>Insert text or other content here</p></td>
+          <td style="${cellStyleStr}"><p class="gjs-fonts gjs-f-text" style="padding:10px;">Insert text or other content here</p></td>
         </tr>
         </table>`,
     });
@@ -35,8 +46,12 @@ define(function() {
       attributes: {class:'gjs-fonts gjs-f-b2'},
       content: `<table style="${tableStyleStr}">
         <tr>
-          <td style="${cellStyleStr} width: 50%"><p>Insert text or other content here</p></td>
-          <td style="${cellStyleStr} width: 50%"><p>Insert text or other content here</p></td>
+          <td style="${cellStyleStr} width: 50%">
+            <p class="gjs-fonts gjs-f-text" style="padding:10px;">Insert text or other content here</p>
+          </td>
+          <td style="${cellStyleStr} width: 50%">
+            <p class="gjs-fonts gjs-f-text" style="padding:10px;">Insert text or other content here</p>
+          </td>
         </tr>
         </table>`,
     });
@@ -46,9 +61,9 @@ define(function() {
       attributes: {class:'gjs-fonts gjs-f-b3'},
       content: `<table style="${tableStyleStr}">
         <tr>
-          <td style="${cellStyleStr} width: 33.3333%"><p>Insert text or other content here</p></td>
-          <td style="${cellStyleStr} width: 33.3333%"><p>Insert text or other content here</p></td>
-          <td style="${cellStyleStr} width: 33.3333%"><p>Insert text or other content here</p></td>
+          <td style="${cellStyleStr} width: 33.3333%"><p class="gjs-fonts gjs-f-text" style="padding:10px;">Insert text or other content here</p></td>
+          <td style="${cellStyleStr} width: 33.3333%"><p class="gjs-fonts gjs-f-text" style="padding:10px;">Insert text or other content here</p></td>
+          <td style="${cellStyleStr} width: 33.3333%"><p class="gjs-fonts gjs-f-text" style="padding:10px;">Insert text or other content here</p></td>
         </tr>
         </table>`,
     });
@@ -58,8 +73,8 @@ define(function() {
       attributes: {class:'gjs-fonts gjs-f-b37'},
       content: `<table style="${tableStyleStr}">
         <tr>
-          <td style="${cellStyleStr} width:30%"><p>Insert text or other content here</p></td>
-          <td style="${cellStyleStr} width:70%"><p>Insert text or other content here</p></td>
+          <td style="${cellStyleStr} width:30%"><p class="gjs-fonts gjs-f-text" style="padding:10px;">Insert text or other content here</p></td>
+          <td style="${cellStyleStr} width:70%"><p class="gjs-fonts gjs-f-text" style="padding:10px;">Insert text or other content here</p></td>
         </tr>
         </table>`,
     });
@@ -78,17 +93,6 @@ define(function() {
       }
       </style>`,
       attributes: {class:'gjs-fonts gjs-f-divider'}
-    });
-    bm.add('text', {
-      label: opt.textBlkLabel,
-      category: 'Basic Content',
-      attributes: {class:'gjs-fonts gjs-f-text'},
-      content: {
-       type: 'text',
-       content: 'Insert your text here',
-       style: { padding: '10px' },
-       activeOnRender: 1
-      },
     });
     bm.add('text-sect', {
       label: opt.textSectionBlkLabel,
