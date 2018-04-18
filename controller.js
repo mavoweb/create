@@ -63,6 +63,7 @@ for (var i = 0; i < domComponents.componentTypes.length; i++) {
               name: 'property',
             });
     var mvAttributeOptions = [];
+    mvAttributeOptions.push({value:"", name: "Default"});
     for (var j = 0; j < newTraits.length; j++) {
       var trait = newTraits[j];
       var newOption;
