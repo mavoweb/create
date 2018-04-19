@@ -451,8 +451,95 @@ var getAllMavoProperties = function() {
 $('body').on('click', '.expr-title', function () {
   var dataValue = $(this).data('value');
   var currentText = $("#expression-text-box").val();
+  // var input = $("#expression-text-box");
+  // var scrollPos = input.scrollTop;
+  // var pos = input.selectionStart;
+  // console.log(pos);
+  // var front = (input.val()).substring(0, pos);
+  // var back = (input.val()).substring(pos, input.val().length);
+  // input.val(front+dataValue+back);
+  // input.scrollTop = scrollPos;
   $("#expression-text-box").val(currentText + " " + dataValue);
   $("#expression-text-box").focus();
+});
+
+$("#expression-text-box").on('keyup', function () {
+  var expContent = $("#expression-text-box").val();
+  if (expContent[expContent.length-1] == " " || expContent.length < 1) {
+    //if white space at end:
+    resetPopover();
+    return
+  }
+  var counts = {};
+  var popoverContentCols = $("#popover-content-html td");
+  for (c=0; c<popoverContentCols.length; c++) {
+    var col = popoverContentCols[c].children[0];
+    var hidden = 0;
+    for (r=0; r<col.children.length; r++) {
+      var item = $(col.children[r]);
+      var value = item.data("value");
+      if (!(value.includes(expContent))) {
+        //remove from sight
+        item.addClass('hidden');
+        hidden = hidden + 1;
+      } else {
+        item.removeClass('hidden');
+      }
+    }
+    counts[c] = [col.children.length, hidden];
+    if (col.children.length == hidden) {
+      //hide whole column
+      $(popoverContentCols[c]).addClass('hidden');
+    } else {
+      $(popoverContentCols[c]).removeClass('hidden');
+    }
+  }
+
+  var popoverTitlesCols = $("#popover-title-html td");
+  for (c=0; c<popoverTitlesCols.length; c++) {
+    var col = popoverTitlesCols[c];
+    if (counts[c][0] == counts[c][1]) {
+      $(col).addClass('hidden');
+    } else {
+      $(col).removeClass('hidden');
+    }
+  }
+
+  $("#expression-text-box").popover();
+  var popover = $('#expression-text-box').data('bs.popover');
+  var popoverContent = $('#popover-content-html').html();
+  popover.config.content = popoverContent;
+  var popoverTitle = $('#popover-title-html').html();
+  popover.config.title = popoverTitle;
+
+});
+
+var resetPopover = function() {
+  var popoverContentCols = $("#popover-content-html td");
+  for (c=0; c<popoverContentCols.length; c++) {
+    var col = popoverContentCols[c].children[0];
+    $(popoverContentCols[c]).removeClass('hidden');
+    for (r=0; r<col.children.length; r++) {
+      var item = $(col.children[r]);
+      item.removeClass('hidden');
+    }
+  }
+
+  var popoverTitlesCols = $("#popover-title-html td");
+  for (c=0; c<popoverTitlesCols.length; c++) {
+    $(col).removeClass('hidden');
+  }
+
+  $("#expression-text-box").popover();
+  var popover = $('#expression-text-box').data('bs.popover');
+  var popoverContent = $('#popover-content-html').html();
+  popover.config.content = popoverContent;
+  var popoverTitle = $('#popover-title-html').html();
+  popover.config.title = popoverTitle;
+};
+
+$('#expressionsModal').on('hidden.bs.modal', function (e) {
+  resetPopover();
 });
 
 
