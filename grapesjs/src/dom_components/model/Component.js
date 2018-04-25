@@ -2,9 +2,11 @@ import {
   isUndefined,
   isArray,
   isEmpty,
+  isBoolean,
   has,
   clone,
   isString,
+  forEach,
   keys
 } from 'underscore';
 import { shallowDiff, hasDnd } from 'utils/mixins';
@@ -185,8 +187,12 @@ const Component = Backbone.Model.extend(Styleable).extend(
       this.initComponents();
       this.initToolbar();
       this.set('status', '');
-      this.listenTo(this.get('classes'), 'add remove change', () =>
-        this.emitUpdate('classes')
+
+      // Register global updates for collection properties
+      ['classes', 'traits'].forEach(name =>
+        this.listenTo(this.get(name), 'add remove change', () =>
+          this.emitUpdate(name)
+        )
       );
       this.init();
     },
@@ -322,11 +328,13 @@ const Component = Backbone.Model.extend(Styleable).extend(
 
       if (em && em.getConfig('avoidInlineStyle')) {
         prop = isString(prop) ? this.parseStyle(prop) : prop;
+        prop = { ...prop, ...this.get('style') };
         const state = this.get('state');
         const cc = em.get('CssComposer');
         const propOrig = this.getStyle();
         this.rule = cc.setIdRule(this.getId(), prop, { ...opts, state });
         const diff = shallowDiff(propOrig, prop);
+        this.set('style', {}, { silent: 1 });
         keys(diff).forEach(pr => this.trigger(`change:style:${pr}`));
       } else {
         prop = Styleable.setStyle.apply(this, arguments);
@@ -506,9 +514,10 @@ const Component = Backbone.Model.extend(Styleable).extend(
       traits.each(trait => {
         found = 1;
         if (!trait.get('changeProp')) {
+          const name = trait.get('name');
           const value = trait.getInitValue();
-          if (value) {
-            attrs[trait.get('name')] = value;
+          if (name && value) {
+            attrs[name] = value;
           }
         }
       });
@@ -670,10 +679,15 @@ const Component = Backbone.Model.extend(Styleable).extend(
       const attributes = this.getAttrToHTML();
 
       for (let attr in attributes) {
-        const value = attributes[attr];
+        const val = attributes[attr];
+        const value = isString(val) ? val.replace(/"/g, '&quot;') : val;
 
         if (!isUndefined(value)) {
-          attrs.push(`${attr}="${value}"`);
+          if (isBoolean(value)) {
+            value && attrs.push(attr);
+          } else {
+            attrs.push(`${attr}="${value}"`);
+          }
         }
       }
 
@@ -706,11 +720,35 @@ const Component = Backbone.Model.extend(Styleable).extend(
      */
     toJSON(...args) {
       const obj = Backbone.Model.prototype.toJSON.apply(this, args);
-      const scriptStr = this.getScriptString();
       obj.attributes = this.getAttributes();
       delete obj.attributes.class;
       delete obj.toolbar;
-      scriptStr && (obj.script = scriptStr);
+
+      if (this.em.getConfig('avoidDefaults')) {
+        const defaults = this.defaults;
+
+        forEach(defaults, (value, key) => {
+          if (key !== 'type' && obj[key] === value) {
+            delete obj[key];
+          }
+        });
+
+        if (isEmpty(obj.type)) {
+          delete obj.type;
+        }
+
+        forEach(['attributes', 'style'], prop => {
+          if (isEmpty(defaults[prop]) && isEmpty(obj[prop])) {
+            delete obj[prop];
+          }
+        });
+
+        forEach(['classes', 'components'], prop => {
+          if (isEmpty(defaults[prop]) && !obj[prop].length) {
+            delete obj[prop];
+          }
+        });
+      }
 
       return obj;
     },
