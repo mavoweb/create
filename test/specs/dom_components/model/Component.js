@@ -67,6 +67,21 @@ module.exports = {
         expect(obj.get('stylable')).toEqual(true);
       });
 
+      it('Sets attributes correctly from traits', () => {
+        obj.set('traits', [
+          {
+            label: 'Title',
+            name: 'title',
+            value: 'The title'
+          },
+          {
+            label: 'Context',
+            value: 'primary'
+          }
+        ]);
+        expect(obj.get('attributes')).toEqual({ title: 'The title' });
+      });
+
       it('Has expected name', () => {
         expect(obj.getName()).toEqual('Box');
       });
@@ -133,6 +148,29 @@ module.exports = {
       it('Component toHTML with no closing tag', () => {
         obj = new Component({ void: 1 });
         expect(obj.toHTML()).toEqual('<div/>');
+      });
+
+      it('Component toHTML with quotes in attribute', () => {
+        obj = new Component();
+        let attrs = obj.get('attributes');
+        attrs['data-test'] = '"value"';
+        obj.set('attributes', attrs);
+        expect(obj.toHTML()).toEqual(
+          '<div data-test="&quot;value&quot;"></div>'
+        );
+      });
+
+      it('Manage correctly boolean attributes', () => {
+        obj = new Component();
+        obj.set('attributes', {
+          'data-test': 'value',
+          checked: false,
+          required: true,
+          avoid: true
+        });
+        expect(obj.toHTML()).toEqual(
+          '<div data-test="value" required avoid></div>'
+        );
       });
 
       it('Component parse empty div', () => {
