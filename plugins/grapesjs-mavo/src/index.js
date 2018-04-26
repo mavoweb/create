@@ -2,7 +2,6 @@ import grapesjs from 'grapesjs';
 import pluginBlocks from 'grapesjs-blocks-basic';
 import pluginNavbar from 'grapesjs-navbar';
 import pluginCountdown from 'grapesjs-component-countdown';
-import pluginForms from 'grapesjs-plugin-forms';
 import pluginExport from 'grapesjs-plugin-export';
 import pluginAviary from 'grapesjs-aviary';
 import pluginFilestack from 'grapesjs-plugin-filestack';
@@ -73,10 +72,6 @@ export default grapesjs.plugins.add('gjs-mavo', (editor, opts = {}) => {
     // By setting this option to `false` will avoid loading the plugin
     countdownOpts: {},
 
-    // `grapesjs-plugin-forms` plugin options
-    // By setting this option to `false` will avoid loading the plugin
-    formsOpts: {},
-
     // `grapesjs-plugin-export` plugin options
     // By setting this option to `false` will avoid loading the plugin
     exportOpts: {},
@@ -102,7 +97,6 @@ export default grapesjs.plugins.add('gjs-mavo', (editor, opts = {}) => {
     blocksBasicOpts,
     navbarOpts,
     countdownOpts,
-    formsOpts,
     exportOpts,
     aviaryOpts,
     filestackOpts
@@ -112,7 +106,6 @@ export default grapesjs.plugins.add('gjs-mavo', (editor, opts = {}) => {
   blocksBasicOpts && pluginBlocks(editor, blocksBasicOpts);
   navbarOpts && pluginNavbar(editor, navbarOpts);
   countdownOpts && pluginCountdown(editor, countdownOpts);
-  formsOpts && pluginForms(editor, formsOpts);
   exportOpts && pluginExport(editor, exportOpts);
   aviaryOpts && pluginAviary(editor, aviaryOpts);
   filestackOpts && pluginFilestack(editor, filestackOpts);
