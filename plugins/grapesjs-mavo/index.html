@@ -5,28 +5,22 @@
     <title>Mavo Create</title>
     <link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet">
     <link href="dist/grapesjs-mavo.min.css" rel="stylesheet">
+    <link href="index.css" rel="stylesheet">
     <script src="http://feather.aviary.com/imaging/v3/editor.js"></script>
     <script src="https://static.filestackapi.com/v3/filestack-0.1.10.js"></script>
     <script src="https://unpkg.com/grapesjs"></script>
     <script src="dist/grapesjs-mavo.min.js"></script>
-    <style>
-      body,
-      html {
-        height: 100%;
-        margin: 0;
-      }
-    </style>
   </head>
   <body>
 
-    <div id="gjs" style="height:0px; overflow:hidden">
+    <div id="gjs">
       <div class="panel">
         <h1 class="welcome">Welcome to</h1>
         <div class="big-title">
           <span>Mavo Create</span>
         </div>
         <div class="description">
-          Use Mavo Create to create Mavo apps!
+          Use Mavo Create to create
         </div>
       </div>
       <style>
@@ -47,20 +41,6 @@
           text-align: center;
           font-weight: 100;
           margin: 0px;
-        }
-
-        .logo {
-          width: 70px;
-          height: 70px;
-          vertical-align: middle;
-        }
-
-        .logo path {
-          pointer-events: none;
-          fill: none;
-          stroke-linecap: round;
-          stroke-width: 7;
-          stroke: #fff
         }
 
         .big-title {
@@ -89,7 +69,10 @@
 
         plugins: ['gjs-mavo'],
         pluginsOpts: {
-          'gjs-mavo': {}
+          'gjs-mavo': {
+            blocks: ['link-block', 'text-basic', 'input', 'textarea', 'select', 'label', 'checkbox'],
+            useRequiredTrait: false,
+          }
         }
       });
     </script>

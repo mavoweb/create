@@ -9,6 +9,7 @@ import pluginFilestack from 'grapesjs-plugin-filestack';
 import commands from './commands';
 import blocks from './blocks';
 import components from './components';
+import traits from './traits';
 import panels from './panels';
 import styles from './styles';
 
@@ -17,8 +18,8 @@ export default grapesjs.plugins.add('gjs-mavo', (editor, opts = {}) => {
 
   let defaults = {
     // Which blocks to add
-    blocks: ['link-block', 'quote', 'text-basic'],
-
+    blocks: ['link-block', 'quote', 'text-basic', 'form', 'input', 'textarea', 'select', 'button', 'label', 'checkbox', 'radio'],
+    
     // Modal import title
     modalImportTitle: 'Import',
 
@@ -85,6 +86,44 @@ export default grapesjs.plugins.add('gjs-mavo', (editor, opts = {}) => {
     // Filestack library should be included manually
     // By setting this option to `false` will avoid loading the plugin
     filestackOpts: 0,
+
+    // settings for the form elements, modeled off of the
+    // 'grapesjs-plugin-forms' plugin
+    useRequiredTrait: true,
+
+    labelTraitMethod: 'Method',
+    labelTraitAction: 'Action',
+    labelTraitState: 'State',
+    labelTraitId: 'Id',
+    labelTraitFor: 'For',
+    labelInputName: 'Input',
+    labelTextareaName: 'Textarea',
+    labelSelectName: 'Select',
+    labelCheckboxName: 'Checkbox',
+    labelRadioName: 'Radio',
+    labelButtonName: 'Button',
+    labelTraitName: 'Name',
+    labelTraitPlaceholder: 'Placeholder',
+    labelTraitValue: 'Value',
+    labelTraitRequired: 'Required',
+    labelTraitType: 'Type',
+    labelTraitOptions: 'Options',
+    labelTraitChecked: 'Checked',
+    labelTypeText: 'Text',
+    labelTypeEmail: 'Email',
+    labelTypePassword: 'Password',
+    labelTypeNumber: 'Number',
+    labelTypeSubmit: 'Submit',
+    labelTypeReset: 'Reset',
+    labelTypeButton: 'Button',
+    labelNameLabel: 'Label',
+    labelForm: 'Form',
+    labelSelectOption: '- Select option -',
+    labelOption: 'Option',
+    labelStateNormal: 'Normal',
+    labelStateSuccess: 'Success',
+    labelStateError: 'Error',
+
   };
 
   // Load defaults
@@ -99,7 +138,8 @@ export default grapesjs.plugins.add('gjs-mavo', (editor, opts = {}) => {
     countdownOpts,
     exportOpts,
     aviaryOpts,
-    filestackOpts
+    filestackOpts,
+    formElementsOpts
   } = config;
 
   // Load plugins
@@ -118,6 +158,9 @@ export default grapesjs.plugins.add('gjs-mavo', (editor, opts = {}) => {
 
   // Load commands
   commands(editor, config);
+
+  // Load traits
+  traits(editor, config);
 
   // Load panels
   panels(editor, config);

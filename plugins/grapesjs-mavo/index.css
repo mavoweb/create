@@ -1,0 +1,17 @@
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+#gjs {
+    height: 0px; 
+    overflow: hidden;
+}
+
+/*css for interactive/forms elements*/
+.gjs-block-svg {
+    width: 61%;
+}
+.gjs-block-svg-path {
+    fill: white;
+}
