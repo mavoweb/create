@@ -1,5 +1,4 @@
 import grapesjs from 'grapesjs';
-import pluginBlocks from 'grapesjs-blocks-basic';
 import pluginNavbar from 'grapesjs-navbar';
 import pluginCountdown from 'grapesjs-component-countdown';
 import pluginExport from 'grapesjs-plugin-export';
@@ -18,7 +17,10 @@ export default grapesjs.plugins.add('gjs-mavo', (editor, opts = {}) => {
 
   let defaults = {
     // Which blocks to add
-    blocks: ['link-block', 'quote', 'text-basic', 'form', 'input', 'textarea', 'select', 'button', 'label', 'checkbox', 'radio'],
+    //basic: 'column1', 'column2', 'column3', 'column3-7', 'text', 'link', 'image', 'video', 'map'
+    //extra: 'link-block', 'quote', 'text-basic'
+    //form: 'form', 'input', 'textarea', 'select', 'button', 'label', 'checkbox', 'radio'
+    blocks: ['column1', 'column2', 'column3', 'column3-7', 'divider', 'text', 'link', 'image', 'video', 'map', 'link-block', 'quote', 'text-basic', 'form', 'input', 'textarea', 'select', 'button', 'label', 'checkbox', 'radio'],
     
     // Modal import title
     modalImportTitle: 'Import',
@@ -61,10 +63,6 @@ export default grapesjs.plugins.add('gjs-mavo', (editor, opts = {}) => {
     // Use custom set of sectors for the Style Manager
     customStyleManager: [],
 
-    // `grapesjs-blocks-basic` plugin options
-    // By setting this option to `false` will avoid loading the plugin
-    blocksBasicOpts: {},
-
     // `grapesjs-navbar` plugin options
     // By setting this option to `false` will avoid loading the plugin
     navbarOpts: {},
@@ -90,6 +88,7 @@ export default grapesjs.plugins.add('gjs-mavo', (editor, opts = {}) => {
     // settings for the form elements, modeled off of the
     // 'grapesjs-plugin-forms' plugin
     useRequiredTrait: true,
+    formCategory: 'Interactive',
 
     labelTraitMethod: 'Method',
     labelTraitAction: 'Action',
@@ -124,6 +123,43 @@ export default grapesjs.plugins.add('gjs-mavo', (editor, opts = {}) => {
     labelStateSuccess: 'Success',
     labelStateError: 'Error',
 
+    // settings for the basic block elements, modeled off of the
+    // 'grapesjs-blocks-basic' plugin, and the blocks in the
+    // 'grapesjs-preset-newletter' plugin
+    stylePrefix: '',
+    addBasicStyle: true,
+    labelColumn1: '1 Column',
+    labelColumn2: '2 Columns',
+    labelColumn3: '3 Columns',
+    labelColumn37: '2 Columns 3/7',
+    labelDivider: 'Divider',
+    labelText: 'Text',
+    labelLink: 'Link',
+    labelImage: 'Image',
+    labelVideo: 'Video',
+    labelMap: 'Map',
+    categoryColumn1: 'Structured Content',
+    categoryColumn2: 'Structured Content',
+    categoryColumn3: 'Structured Content',
+    categoryColumn37: 'Structured Content',
+    categoryDivider: 'Structured Content',
+    categoryText: 'Content',
+    categoryLink: 'Content',
+    categoryImage: 'Content',
+    categoryVideo: 'Content',
+    categoryMap: 'Content',
+    cellStyle: {
+      padding: 0,
+      margin: 0,
+      'vertical-align': 'top',
+    },
+    tableStyle: {
+      height: '150px',
+      margin: '0 auto 10px auto',
+      padding: '5px 5px 5px 5px',
+      width: '100%'
+    },
+
   };
 
   // Load defaults
@@ -133,17 +169,14 @@ export default grapesjs.plugins.add('gjs-mavo', (editor, opts = {}) => {
   }
 
   const {
-    blocksBasicOpts,
     navbarOpts,
     countdownOpts,
     exportOpts,
     aviaryOpts,
-    filestackOpts,
-    formElementsOpts
+    filestackOpts
   } = config;
 
   // Load plugins
-  blocksBasicOpts && pluginBlocks(editor, blocksBasicOpts);
   navbarOpts && pluginNavbar(editor, navbarOpts);
   countdownOpts && pluginCountdown(editor, countdownOpts);
   exportOpts && pluginExport(editor, exportOpts);

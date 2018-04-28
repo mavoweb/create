@@ -5,7 +5,7 @@
     <title>Mavo Create</title>
     <link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet">
     <link href="dist/grapesjs-mavo.min.css" rel="stylesheet">
-    <link href="index.css" rel="stylesheet">
+    <link href="./index.css" rel="stylesheet">
     <script src="http://feather.aviary.com/imaging/v3/editor.js"></script>
     <script src="https://static.filestackapi.com/v3/filestack-0.1.10.js"></script>
     <script src="https://unpkg.com/grapesjs"></script>
@@ -20,7 +20,7 @@
           <span>Mavo Create</span>
         </div>
         <div class="description">
-          Use Mavo Create to create
+          Use Mavo Create to create Mavo apps!
         </div>
       </div>
       <style>
@@ -36,24 +36,22 @@
           font: caption;
           font-weight: 100;
         }
-
         .welcome {
           text-align: center;
           font-weight: 100;
           margin: 0px;
         }
-
         .big-title {
           text-align: center;
           font-size: 3.5rem;
           margin: 15px 0;
         }
-
         .description {
           text-align: justify;
           font-size: 1rem;
           line-height: 1.5rem;
         }
+
       </style>
     </div>
 
@@ -70,12 +68,22 @@
         plugins: ['gjs-mavo'],
         pluginsOpts: {
           'gjs-mavo': {
-            blocks: ['link-block', 'text-basic', 'input', 'textarea', 'select', 'label', 'checkbox'],
+            blocks: ['column1', 'column2', 'column3', 'column3-7', 'divider', 'text', 'link', 'image', 'video', 'map', 'text-basic', 'quote', 'input', 'textarea', 'select', 'label', 'checkbox'],
             navbarOpts: false,
             countdownOpts: false,
             useRequiredTrait: false,
           }
-        }
+        },
+        canvas: {
+          scripts: [
+            'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js',
+            'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js',
+            ],
+          styles: [
+            './index.css',
+            'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css',
+            ],
+        },
       });
     </script>
   </body>

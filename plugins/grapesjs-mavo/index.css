@@ -12,6 +12,22 @@ body, html {
 .gjs-block-svg {
     width: 61%;
 }
-.gjs-block-svg-path {
-    fill: white;
+
+.bdg-sect{
+  padding-top:70px;
+  padding-bottom:70px;
+}
+.quote{
+  color:#777;
+  font-weight: 300;
+  padding: 10px;
+  box-shadow: -5px 0 0 0 #ccc;
+  font-style: italic;
+  margin: 20px 30px;
+}
+.heading {
+  padding: 10px;
+}
+.paragraph {
+  padding: 10px;
 }
