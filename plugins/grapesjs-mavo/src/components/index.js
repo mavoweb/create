@@ -52,6 +52,18 @@ export default (editor, config = {}) => {
     changeProp: 1
   };
 
+  const mavoPropertyTrait = {
+    label: c.labelMavoProperty,
+    type: 'input',
+    name: 'property',
+  };
+
+  const mavoMultipleTrait = {
+    label: c.labelMvMultiple,
+    type: 'checkbox',
+    name: 'mv-multiple',
+  };
+
   const preventDefaultClick = () => {
     return defaultType.view.extend({
       events: {
@@ -427,4 +439,55 @@ export default (editor, config = {}) => {
     }),
     view: textView,
   });
+
+
+  //add mavo traits to all existing components
+
+  for (var i = 0; i < domc.componentTypes.length; i++) {
+    var compType = domc.componentTypes[i].id;
+    if (compType !== 'select') {
+      var originalComp = domc.getType(compType);
+      var givenTraits = originalComp.model.prototype.defaults.traits;
+      var newTraits = givenTraits.slice();
+      newTraits.push({
+                type: 'input',
+                label: 'Mavo Name',
+                name: 'property',
+              });
+      var mvAttributeOptions = [];
+      mvAttributeOptions.push({value:"", name: "Default"});
+      for (var j = 0; j < newTraits.length; j++) {
+        var trait = newTraits[j];
+        var newOption;
+        if (trait.name && trait.label) {
+          newOption = {value: trait.name, name:trait.label};
+        } else {
+          newOption = {value: trait, name:trait};
+        }
+
+        mvAttributeOptions.push(newOption);
+      }
+      mvAttributeOptions.push({value:"none", name: "Text Content"});
+      newTraits.push({
+                type: 'select',
+                label: 'Mavo Target',
+                name: 'mv-attribute',
+                options: mvAttributeOptions
+              });
+      newTraits.push({
+                type: 'checkbox',
+                label: 'Repeatable',
+                name: 'mv-multiple',
+              });
+
+      domc.addType(compType, {
+          model: originalComp.model.extend({
+              defaults: Object.assign({}, originalComp.model.prototype.defaults, {
+                traits: newTraits,
+              }),
+          }),
+          view: originalComp.view
+      });
+    }
+  };
 }

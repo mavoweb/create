@@ -160,6 +160,11 @@ export default grapesjs.plugins.add('gjs-mavo', (editor, opts = {}) => {
       width: '100%'
     },
 
+    //additional defaults for Mavo properties
+    labelMavoProperty: 'Mavo Name',
+    labelMvMultiple: 'Repeatable',
+    labelMvAttribute: 'Mavo Target',
+
   };
 
   // Load defaults
