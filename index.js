@@ -363,7 +363,7 @@ $('body').on('click', '.expr-title', function () {
   $("#expression-text-box").focus();
 });
 
-$("#expression-text-box").on('keyup', function () {
+$("#expression-text-box").on('keyup', function (e) {
   var expContent = $("#expression-text-box").val();
   if (expContent[expContent.length-1] == " " || expContent.length < 1) {
     //if white space at end:
@@ -411,7 +411,7 @@ $("#expression-text-box").on('keyup', function () {
   popover.config.content = popoverContent;
   var popoverTitle = $('#popover-title-html').html();
   popover.config.title = popoverTitle;
-
+  popover.setContent();
 });
 
 var resetPopover = function() {
@@ -427,7 +427,7 @@ var resetPopover = function() {
 
   var popoverTitlesCols = $("#popover-title-html td");
   for (c=0; c<popoverTitlesCols.length; c++) {
-    $(col).removeClass('hidden');
+    $(popoverTitlesCols[c]).removeClass('hidden');
   }
 
   $("#expression-text-box").popover();
@@ -436,11 +436,13 @@ var resetPopover = function() {
   popover.config.content = popoverContent;
   var popoverTitle = $('#popover-title-html').html();
   popover.config.title = popoverTitle;
+  popover.setContent();
 };
 
 $('#expressionsModal').on('hidden.bs.modal', function (e) {
   resetPopover();
 });
+
 
 
 // Add and beautify tooltips
