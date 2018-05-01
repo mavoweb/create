@@ -26,7 +26,19 @@ var editor = grapesjs.init({
       './index.css',
       'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css',
       ],
+    customBadgeLabel: function(ComponentModel) {
+      var propertyName;
+      var property = ComponentModel.get('traits').where({ name: 'property' })[0];
+      if (property) {
+        propertyName = property.get('value');
+      }
+      if (propertyName && propertyName !== '') {
+        return ComponentModel.getName() + ' - ' + propertyName;
+      }
+      return ComponentModel.getName();
+    },
   },
+
 });
 
 
@@ -47,6 +59,17 @@ $("[data-toggle=popover]").popover();
 var pnm = editor.Panels;
 var cmdm = editor.Commands;
 var md = editor.Modal;
+
+// Show borders by default
+pnm.getButton('options', 'sw-visibility').set('active', 1);
+
+//remove preview, fullscreen, and export buttons
+pnm.getButton('options', 'preview').set('attributes', {style: 'display:none;'});
+pnm.getButton('options', 'fullscreen').set('attributes', {style: 'display:none;'});
+pnm.getButton('options', 'export-template').set('attributes', {style: 'display:none;'});
+
+//make import button icon into upload button
+pnm.getButton('options', 'gjs-open-import-webpage').set('className', 'fa fa-upload');
 
 // for debugging
 // window.editor = editor;
@@ -236,15 +259,6 @@ $('#settingsModal').on('hidden.bs.modal', function (e) {
 });
 
 
-// Show borders by default
-pnm.getButton('options', 'sw-visibility').set('active', 1);
-
-//remove preview, fullscreen, and export buttons
-pnm.getButton('options', 'preview').set('attributes', {style: 'display:none;'});
-pnm.getButton('options', 'fullscreen').set('attributes', {style: 'display:none;'});
-pnm.getButton('options', 'export-template').set('attributes', {style: 'display:none;'});
-
-
 //expressions modal
 pnm.addButton('options', {
   id: 'make-expressions',
@@ -430,7 +444,7 @@ $('#expressionsModal').on('hidden.bs.modal', function (e) {
 
 
 // Add and beautify tooltips
-[['sw-visibility', 'Show Borders'], ['undo', 'Undo'], ['redo', 'Redo'], ['gjs-open-import-webpage', 'Import'], ['canvas-clear', 'Clear canvas']].forEach(function(item) {
+[['sw-visibility', 'Show Borders'], ['undo', 'Undo'], ['redo', 'Redo'], ['gjs-open-import-webpage', 'Import Template'], ['canvas-clear', 'Clear canvas']].forEach(function(item) {
   pnm.getButton('options', item[0]).set('attributes', {title: item[1], 'data-tooltip-pos': 'bottom'});
 });
 [['open-sm', 'Style Manager'], ['open-tm', 'Traits Manager'], ['open-layers', 'Layers'], ['open-blocks', 'Blocks']].forEach(function(item) {
