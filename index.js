@@ -235,21 +235,15 @@ $('#settingsModal').on('hidden.bs.modal', function (e) {
   $("#storage-setting-detail").val('');
 });
 
-[['open-sm', 'Style Manager'], ['open-tm', 'Trait Manager'], ['open-layers', 'Layers'], ['open-blocks', 'Blocks']].forEach(function(item) {
-  pnm.getButton('views', item[0]).set('attributes', {title: item[1], 'data-tooltip-pos': 'bottom'});
-});
 
-// Beautify tooltips
-var titles = document.querySelectorAll('*[title]');
-for (var i = 0; i < titles.length; i++) {
-  var el = titles[i];
-  var title = el.getAttribute('title');
-  title = title ? title.trim(): '';
-  if(!title)
-    break;
-  el.setAttribute('data-tooltip', title);
-  el.setAttribute('title', '');
-}
+// Show borders by default
+pnm.getButton('options', 'sw-visibility').set('active', 1);
+
+//remove preview, fullscreen, and export buttons
+pnm.getButton('options', 'preview').set('attributes', {style: 'display:none;'});
+pnm.getButton('options', 'fullscreen').set('attributes', {style: 'display:none;'});
+pnm.getButton('options', 'export-template').set('attributes', {style: 'display:none;'});
+
 
 //expressions modal
 pnm.addButton('options', {
@@ -433,6 +427,27 @@ var resetPopover = function() {
 $('#expressionsModal').on('hidden.bs.modal', function (e) {
   resetPopover();
 });
+
+
+// Add and beautify tooltips
+[['sw-visibility', 'Show Borders'], ['undo', 'Undo'], ['redo', 'Redo'], ['gjs-open-import-webpage', 'Import'], ['canvas-clear', 'Clear canvas']].forEach(function(item) {
+  pnm.getButton('options', item[0]).set('attributes', {title: item[1], 'data-tooltip-pos': 'bottom'});
+});
+[['open-sm', 'Style Manager'], ['open-tm', 'Traits Manager'], ['open-layers', 'Layers'], ['open-blocks', 'Blocks']].forEach(function(item) {
+  pnm.getButton('views', item[0]).set('attributes', {title: item[1], 'data-tooltip-pos': 'bottom'});
+});
+
+var titles = document.querySelectorAll('*[title]');
+
+for (var i = 0; i < titles.length; i++) {
+  var el = titles[i];
+  var title = el.getAttribute('title');
+  title = title ? title.trim(): '';
+  if(!title)
+    break;
+  el.setAttribute('data-tooltip', title);
+  el.setAttribute('title', '');
+}
 
 
 })();
