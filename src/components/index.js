@@ -87,7 +87,7 @@ export default (editor, config = {}) => {
     var originalComp = domc.getType(compType);
     var givenTraits = originalComp.model.prototype.defaults.traits;
     var newTraits = givenTraits.slice();
-    
+
     var addId = true;
     var addTitle = true;
     for (var j = 0; j < newTraits.length; j++) {
@@ -198,7 +198,7 @@ export default (editor, config = {}) => {
     if (mvAttributeOptions.length > 0) {
       newTraits.push({
         type: 'select',
-        label: 'Mavo Target',
+        label: c.labelMvAttribute,
         name: 'mv-attribute',
         options: mvAttributeOptions
       });  
@@ -223,7 +223,7 @@ export default (editor, config = {}) => {
         ...defaultModel.prototype.defaults,
         droppable: ':not(form)',
         draggable: ':not(form)',
-        traits: [{
+        traits: [idTrait, {
           type: 'select',
           label: c.labelTraitMethod,
           name: 'method',
@@ -336,8 +336,10 @@ export default (editor, config = {}) => {
 
   // INPUT
   var inputTraits = [
+    idTrait,
     nameTrait,
-    placeholderTrait, {
+    placeholderTrait,
+    {
       label: c.labelTraitType,
       type: 'select',
       name: 'type',
@@ -347,7 +349,19 @@ export default (editor, config = {}) => {
         {value: 'password', name: c.labelTypePassword},
         {value: 'number', name: c.labelTypeNumber},
       ]
-    }
+    },
+    mavoPropertyTrait,
+    {
+      type: 'select',
+      label: c.labelMvAttribute,
+      name: 'mv-attribute',
+      options: [{value: idTrait.name, name: capitalizeFirst(idTrait.label)},
+        {value: nameTrait.name, name: capitalizeFirst(nameTrait.label)},
+        {value: placeholderTrait.name, name: capitalizeFirst(placeholderTrait.label)},
+        {value: "value", name: "Text Content (default)"},
+      ]
+    },
+    mavoMultipleTrait,
   ];
 
   if (c.useRequiredTrait) {
@@ -379,8 +393,23 @@ export default (editor, config = {}) => {
 
   // TEXTAREA
   var textAreaTraits = [
+    idTrait,
+    titleTrait,
     nameTrait,
-    placeholderTrait
+    placeholderTrait,
+    mavoPropertyTrait,
+    {
+      type: 'select',
+      label: c.labelMvAttribute,
+      name: 'mv-attribute',
+      options: [{value: idTrait.name, name: capitalizeFirst(idTrait.label)},
+        {value: titleTrait.name, name: capitalizeFirst(titleTrait.label)},
+        {value: nameTrait.name, name: capitalizeFirst(nameTrait.label)},
+        {value: placeholderTrait.name, name: capitalizeFirst(placeholderTrait.label)},
+        {value: "", name: "Text Content (default)"},
+      ]
+    },
+    mavoMultipleTrait,
   ];
 
   if (c.useRequiredTrait) {
@@ -407,10 +436,22 @@ export default (editor, config = {}) => {
 
   // SELECT
   var selectTraits = [
+    idTrait,
     nameTrait, {
       label: c.labelTraitOptions,
       type: 'select-options'
-    }
+    },
+    mavoPropertyTrait,
+    {
+      type: 'select',
+      label: c.labelMvAttribute,
+      name: 'mv-attribute',
+      options: [{value: idTrait.name, name: capitalizeFirst(idTrait.label)},
+        {value: nameTrait.name, name: capitalizeFirst(nameTrait.label)},
+        {value: "value", name: "Selection (default)"},
+      ]
+    },
+    mavoMultipleTrait,
   ];
 
   if (c.useRequiredTrait) {
@@ -439,7 +480,19 @@ export default (editor, config = {}) => {
     idTrait,
     nameTrait,
     valueTrait,
-    checkedTrait
+    checkedTrait,
+    mavoPropertyTrait,
+    {
+      type: 'select',
+      label: c.labelMvAttribute,
+      name: 'mv-attribute',
+      options: [{value: idTrait.name, name: capitalizeFirst(idTrait.label)},
+        {value: nameTrait.name, name: capitalizeFirst(nameTrait.label)},
+        {value: valueTrait.name, name: capitalizeFirst(valueTrait.label)},
+        {value: checkedTrait.name, name: capitalizeFirst(checkedTrait.label) + ' (default)'},
+      ]
+    },
+    mavoMultipleTrait,
   ];
 
   if (c.useRequiredTrait) {
@@ -521,7 +574,7 @@ export default (editor, config = {}) => {
         ...inputModel.prototype.defaults,
         'custom-name': c.labelButtonName,
         tagName: 'button',
-        traits: [{
+        traits: [idTrait, {
           type: 'content',
           label: 'Text',
         },{
@@ -533,7 +586,9 @@ export default (editor, config = {}) => {
             {value: 'reset', name: c.labelTypeReset},
             {value: 'button', name: c.labelTypeButton},
           ]
-        }]
+        },
+        mavoPropertyTrait,
+        mavoMultipleTrait,]
       },
     }, {
       isComponent(el) {
@@ -569,7 +624,20 @@ export default (editor, config = {}) => {
         ...textModel.prototype.defaults,
         'custom-name': c.labelNameLabel,
         tagName: 'label',
-        traits: [forTrait],
+        traits: [idTrait, titleTrait, forTrait,
+          mavoPropertyTrait,
+          {
+            type: 'select',
+            label: c.labelMvAttribute,
+            name: 'mv-attribute',
+            options: [{value: idTrait.name, name: capitalizeFirst(idTrait.label)},
+              {value: titleTrait.name, name: capitalizeFirst(titleTrait.label)},
+              {value: forTrait.name, name: capitalizeFirst(forTrait.label)},
+              {value: "", name: "Text Content (default)"}
+            ]
+          },
+          mavoMultipleTrait,
+        ],
       },
     }, {
       isComponent(el) {
