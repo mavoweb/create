@@ -279,6 +279,8 @@ module.exports = {
   traitManager: {},
 
   // Texts
+  textViewCode: 'Code',
 
-  textViewCode: 'Code'
+  // Keep unused styles within the editor
+  keepUnusedStyles: 0
 };
