@@ -19,6 +19,11 @@ export default (editor, config = {}) => {
     label: c.labelTraitId,
   };
 
+  const titleTrait = {
+    name: 'title',
+    label: c.labelTraitTitle,
+  };
+
   const forTrait = {
     name: 'for',
     label: c.labelTraitFor,
@@ -75,6 +80,49 @@ export default (editor, config = {}) => {
       },
     });
   };
+
+  // add in ID and Title for all components
+  for (var i = 0; i < domc.componentTypes.length; i++) {
+    var compType = domc.componentTypes[i].id;
+    var originalComp = domc.getType(compType);
+    var givenTraits = originalComp.model.prototype.defaults.traits;
+    var newTraits = givenTraits.slice();
+    
+    var addId = true;
+    var addTitle = true;
+    for (var j = 0; j < newTraits.length; j++) {
+      var trait = newTraits[j];
+      if (trait.name && trait.label) {
+        if (trait.name.toLowerCase() == "id" || trait.label.toLowerCase() == "id") {
+          addId = false;
+        } else if (trait.name.toLowerCase() == "title" || trait.label.toLowerCase() == "title") {
+          addTitle = false;
+        }
+      } else {
+        if (trait.toLowerCase() == "id") {
+          addId = false;
+        } else if (trait.toLowerCase() == "title") {
+          addTitle = false;
+        }
+      }
+    }
+    if (addTitle) {
+      newTraits.unshift(titleTrait);
+    }
+    if (addId) {
+      newTraits.unshift(idTrait);
+    }
+    domc.addType(compType, {
+      model: originalComp.model.extend({
+          defaults: Object.assign({}, originalComp.model.prototype.defaults, {
+            traits: newTraits,
+          }),
+      }),
+      view: originalComp.view
+    });
+  }
+
+
 
   var capitalizeFirst = function(word) {
     return word[0].toUpperCase() + word.substring(1)

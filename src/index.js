@@ -94,6 +94,7 @@ export default grapesjs.plugins.add('gjs-mavo', (editor, opts = {}) => {
     labelTraitAction: 'Action',
     labelTraitState: 'State',
     labelTraitId: 'Id',
+    labelTraitTitle: 'Title',
     labelTraitFor: 'For',
     labelInputName: 'Input',
     labelTextareaName: 'Textarea',
