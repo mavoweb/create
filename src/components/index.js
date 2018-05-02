@@ -148,8 +148,8 @@ export default (editor, config = {}) => {
         }
         if (newOption.value.toLowerCase() == "href") {
           newOption.name = newOption.name + " (default)"
-        }
-        if (newOption.name.toLowerCase() !== "target") {
+          mvAttributeOptions.unshift(newOption);
+        } else if (newOption.name.toLowerCase() !== "target") {
           mvAttributeOptions.push(newOption);
         }
       }
@@ -166,15 +166,16 @@ export default (editor, config = {}) => {
         }
         if (newOption.value.toLowerCase() == "src") {
           newOption.name = newOption.name + " (default)"
+          mvAttributeOptions.unshift(newOption);
+        } else {
+          mvAttributeOptions.push(newOption);
         }
 
-        mvAttributeOptions.push(newOption);
       }
       if (compType == "image") {
         var newOption = {value: "src", name: "Source (default)"}
-        mvAttributeOptions.push(newOption);
+        mvAttributeOptions.unshift(newOption);
       }
-      mvAttributeOptions.push({value:"none", name: "Text Content"});
 
     } else if (compType == "map") {
       //an iframe - don't use mv-attribute
@@ -355,10 +356,10 @@ export default (editor, config = {}) => {
       type: 'select',
       label: c.labelMvAttribute,
       name: 'mv-attribute',
-      options: [{value: idTrait.name, name: capitalizeFirst(idTrait.label)},
+      options: [{value: "value", name: "Text Content (default)"},
+        {value: idTrait.name, name: capitalizeFirst(idTrait.label)},
         {value: nameTrait.name, name: capitalizeFirst(nameTrait.label)},
         {value: placeholderTrait.name, name: capitalizeFirst(placeholderTrait.label)},
-        {value: "value", name: "Text Content (default)"},
       ]
     },
     mavoMultipleTrait,
@@ -402,11 +403,11 @@ export default (editor, config = {}) => {
       type: 'select',
       label: c.labelMvAttribute,
       name: 'mv-attribute',
-      options: [{value: idTrait.name, name: capitalizeFirst(idTrait.label)},
+      options: [{value: "", name: "Text Content (default)"},
+        {value: idTrait.name, name: capitalizeFirst(idTrait.label)},
         {value: titleTrait.name, name: capitalizeFirst(titleTrait.label)},
         {value: nameTrait.name, name: capitalizeFirst(nameTrait.label)},
         {value: placeholderTrait.name, name: capitalizeFirst(placeholderTrait.label)},
-        {value: "", name: "Text Content (default)"},
       ]
     },
     mavoMultipleTrait,
@@ -446,9 +447,9 @@ export default (editor, config = {}) => {
       type: 'select',
       label: c.labelMvAttribute,
       name: 'mv-attribute',
-      options: [{value: idTrait.name, name: capitalizeFirst(idTrait.label)},
+      options: [{value: "value", name: "Selection (default)"},
+        {value: idTrait.name, name: capitalizeFirst(idTrait.label)},
         {value: nameTrait.name, name: capitalizeFirst(nameTrait.label)},
-        {value: "value", name: "Selection (default)"},
       ]
     },
     mavoMultipleTrait,
@@ -486,10 +487,10 @@ export default (editor, config = {}) => {
       type: 'select',
       label: c.labelMvAttribute,
       name: 'mv-attribute',
-      options: [{value: idTrait.name, name: capitalizeFirst(idTrait.label)},
+      options: [{value: checkedTrait.name, name: capitalizeFirst(checkedTrait.label) + ' (default)'},
+        {value: idTrait.name, name: capitalizeFirst(idTrait.label)},
         {value: nameTrait.name, name: capitalizeFirst(nameTrait.label)},
         {value: valueTrait.name, name: capitalizeFirst(valueTrait.label)},
-        {value: checkedTrait.name, name: capitalizeFirst(checkedTrait.label) + ' (default)'},
       ]
     },
     mavoMultipleTrait,
@@ -630,10 +631,10 @@ export default (editor, config = {}) => {
             type: 'select',
             label: c.labelMvAttribute,
             name: 'mv-attribute',
-            options: [{value: idTrait.name, name: capitalizeFirst(idTrait.label)},
+            options: [{value: "", name: "Text Content (default)"},
+              {value: idTrait.name, name: capitalizeFirst(idTrait.label)},
               {value: titleTrait.name, name: capitalizeFirst(titleTrait.label)},
               {value: forTrait.name, name: capitalizeFirst(forTrait.label)},
-              {value: "", name: "Text Content (default)"}
             ]
           },
           mavoMultipleTrait,

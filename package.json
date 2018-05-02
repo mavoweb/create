@@ -1,6 +1,6 @@
 {
   "name": "grapesjs-mavo",
-  "version": "0.1.52",
+  "version": "0.1.55",
   "description": "Mavo Create",
   "main": "dist/grapesjs-mavo.min.js",
   "scripts": {
