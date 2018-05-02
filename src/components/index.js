@@ -218,6 +218,54 @@ export default (editor, config = {}) => {
   }
 
 
+  // //add listeners to text component for expressions
+  // var originalTextComp = domc.getType('text');
+  // // var originalTextModel = originalTextComp.model;
+  // // originalTextModel.addAttributes({ showExpressionsModal: false });
+  // domc.addType('text', {
+  //   model: originalTextComp.model.extend({
+  //       defaults: Object.assign({}, originalTextComp.model.prototype.defaults, {
+  //         attributes: {
+  //           showExpressionsModal: false,
+  //         },
+  //         // showExpressionsModal: false,
+  //         script: function() {
+  //           var showExpressionsModal = '{[ attributes.showExpressionsModal ]}';
+
+  //           var showExpressionGui = function() {
+  //             if (showExpressionsModal) {
+  //               console.log('show');
+  //             }
+  //           };
+
+  //           var hideExpressionGui = function() {
+  //             if (showExpressionsModal) {
+  //               console.log('hide');
+  //             }
+  //           };
+
+  //           var checkEventAndRun = function(e) {
+  //             console.log(e.which)
+  //             console.log(showExpressionsModal)
+  //             if (e.which == 219 && !showExpressionsModal) {
+  //               showExpressionsModal = true;
+  //               showExpressionGui();
+  //             } else if (e.which == 221 && showExpressionsModal) {
+  //               hideExpressionGui();
+  //               showExpressionsModal = false;
+  //             }
+  //           };
+
+  //           this.addEventListener('keyup', checkEventAndRun);
+  //           this.addEventListener('blur', hideExpressionGui);
+  //           this.addEventListener('focus', showExpressionGui);
+  //           // this.addEventListener('change:attributes:showExpressionsModal', console.log(showExpressionsModal));
+  //         },
+  //       }),
+  //   }),
+  //   view: originalTextComp.view
+  // });
+
   //add form components
   domc.addType('form', {
     model: defaultModel.extend({

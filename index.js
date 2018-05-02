@@ -259,6 +259,19 @@ $('#settingsModal').on('hidden.bs.modal', function (e) {
 });
 
 
+
+// editor.on('component:update:attributes', model => {
+//   var attrs = model.getAttributes();
+//   console.log(attrs);
+//   if (attrs.showExpressionsModal) {
+//     //open expressions modal
+//     console.log('open!');
+//   }
+// });
+
+// editor.on('component:update:showExpressionsModal', model => {
+// });
+
 //expressions modal
 pnm.addButton('options', {
   id: 'make-expressions',
