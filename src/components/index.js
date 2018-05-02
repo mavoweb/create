@@ -76,6 +76,99 @@ export default (editor, config = {}) => {
     });
   };
 
+  var capitalizeFirst = function(word) {
+    return word[0].toUpperCase() + word.substring(1)
+  }
+
+  //Mavo.Primitive.getConfig(html element)
+  //add mavo traits to all existing components
+  for (var i = 0; i < domc.componentTypes.length; i++) {
+    var compType = domc.componentTypes[i].id;
+    var originalComp = domc.getType(compType);
+    var givenTraits = originalComp.model.prototype.defaults.traits;
+    var newTraits = givenTraits.slice();
+    var mvAttributeOptions = [];
+
+    if (compType == "link") { //default for mv-attribute is href
+      for (var j = 0; j < newTraits.length; j++) {
+        var trait = newTraits[j];
+        var newOption;
+        if (trait.name && trait.label) {
+          newOption = {value: trait.name, name: capitalizeFirst(trait.label)};
+        } else {
+          newOption = {value: trait, name: capitalizeFirst(trait)};
+        }
+        if (newOption.value.toLowerCase() == "href") {
+          newOption.name = newOption.name + " (default)"
+        }
+        if (newOption.name.toLowerCase() !== "target") {
+          mvAttributeOptions.push(newOption);
+        }
+      }
+      mvAttributeOptions.push({value:"none", name: "Text Content"});
+      
+    } else if (compType == "video" || compType == "image") { //default for mv-attribute is src
+      for (var j = 0; j < newTraits.length; j++) {
+        var trait = newTraits[j];
+        var newOption;
+        if (trait.name && trait.label) {
+          newOption = {value: trait.name, name: capitalizeFirst(trait.label)};
+        } else {
+          newOption = {value: trait, name: capitalizeFirst(trait)};
+        }
+        if (newOption.value.toLowerCase() == "src") {
+          newOption.name = newOption.name + " (default)"
+        }
+
+        mvAttributeOptions.push(newOption);
+      }
+      if (compType == "image") {
+        var newOption = {value: "src", name: "Source (default)"}
+        mvAttributeOptions.push(newOption);
+      }
+      mvAttributeOptions.push({value:"none", name: "Text Content"});
+
+    } else if (compType == "map") {
+      //an iframe - don't use mv-attribute
+
+    } else { //default for mv-attribute is nothing
+      mvAttributeOptions.push({value:"", name: "Text Content (default)"});
+      for (var j = 0; j < newTraits.length; j++) {
+        var trait = newTraits[j];
+        var newOption;
+        if (trait.name && trait.label) {
+          newOption = {value: trait.name, name: capitalizeFirst(trait.label)};
+        } else {
+          newOption = {value: trait, name: capitalizeFirst(trait)};
+        }
+
+        mvAttributeOptions.push(newOption);
+      }
+    }
+
+    newTraits.push(mavoPropertyTrait);
+    if (mvAttributeOptions.length > 0) {
+      newTraits.push({
+        type: 'select',
+        label: 'Mavo Target',
+        name: 'mv-attribute',
+        options: mvAttributeOptions
+      });  
+    }
+    newTraits.push(mavoMultipleTrait);
+
+    domc.addType(compType, {
+      model: originalComp.model.extend({
+          defaults: Object.assign({}, originalComp.model.prototype.defaults, {
+            traits: newTraits,
+          }),
+      }),
+      view: originalComp.view
+    });
+  }
+
+
+  //add form components
   domc.addType('form', {
     model: defaultModel.extend({
       defaults: {
@@ -440,54 +533,4 @@ export default (editor, config = {}) => {
     view: textView,
   });
 
-
-  //add mavo traits to all existing components
-
-  for (var i = 0; i < domc.componentTypes.length; i++) {
-    var compType = domc.componentTypes[i].id;
-    if (compType !== 'select') {
-      var originalComp = domc.getType(compType);
-      var givenTraits = originalComp.model.prototype.defaults.traits;
-      var newTraits = givenTraits.slice();
-      newTraits.push({
-                type: 'input',
-                label: 'Mavo Name',
-                name: 'property',
-              });
-      var mvAttributeOptions = [];
-      mvAttributeOptions.push({value:"", name: "Default"});
-      for (var j = 0; j < newTraits.length; j++) {
-        var trait = newTraits[j];
-        var newOption;
-        if (trait.name && trait.label) {
-          newOption = {value: trait.name, name:trait.label};
-        } else {
-          newOption = {value: trait, name:trait};
-        }
-
-        mvAttributeOptions.push(newOption);
-      }
-      mvAttributeOptions.push({value:"none", name: "Text Content"});
-      newTraits.push({
-                type: 'select',
-                label: 'Mavo Target',
-                name: 'mv-attribute',
-                options: mvAttributeOptions
-              });
-      newTraits.push({
-                type: 'checkbox',
-                label: 'Repeatable',
-                name: 'mv-multiple',
-              });
-
-      domc.addType(compType, {
-          model: originalComp.model.extend({
-              defaults: Object.assign({}, originalComp.model.prototype.defaults, {
-                traits: newTraits,
-              }),
-          }),
-          view: originalComp.view
-      });
-    }
-  };
 }
