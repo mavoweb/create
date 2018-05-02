@@ -61,6 +61,7 @@ export default (editor, config = {}) => {
     label: c.labelMavoProperty,
     type: 'input',
     name: 'property',
+    // changeProp: 1
   };
 
   const mavoMultipleTrait = {
@@ -625,6 +626,7 @@ export default (editor, config = {}) => {
         ...textModel.prototype.defaults,
         'custom-name': c.labelNameLabel,
         tagName: 'label',
+        // property: '',
         traits: [idTrait, titleTrait, forTrait,
           mavoPropertyTrait,
           {
@@ -640,6 +642,50 @@ export default (editor, config = {}) => {
           mavoMultipleTrait,
         ],
       },
+      // initialize(o, opt) {
+      //   var traits = [];
+      //   var prop = this.get('property');
+      //   if (prop.trim().length > 0) {
+      //     traits = this.getAllMavoTraits();
+      //   } else {
+      //     traits = this.getOnlyPropMavoTrait();
+      //   }
+      //   this.set('traits', traits);
+      //   textModel.prototype.initialize.apply(this, arguments);
+      //   this.listenTo(this, 'change:property', this.updateTraits);
+      // },
+      // updateTraits() {
+      //   var prop = this.get('property');
+      //   //NOTE: change:property does not fire when the text box is empty,
+      //   // leading to isses with this
+      //   var traits = this.getOnlyPropMavoTrait();
+      //   if (prop.trim().length > 0) {
+      //     traits = this.getAllMavoTraits();
+      //   } else {
+      //     traits = this.getOnlyPropMavoTrait();
+      //   }
+      //   this.loadTraits(traits);
+      //   this.em.trigger('change:selectedComponent');
+      // },
+      // getAllMavoTraits() {
+      //   return [idTrait, titleTrait, forTrait,
+      //     mavoPropertyTrait,
+      //     {
+      //       type: 'select',
+      //       label: c.labelMvAttribute,
+      //       name: 'mv-attribute',
+      //       options: [{value: "", name: "Text Content (default)"},
+      //         {value: idTrait.name, name: capitalizeFirst(idTrait.label)},
+      //         {value: titleTrait.name, name: capitalizeFirst(titleTrait.label)},
+      //         {value: forTrait.name, name: capitalizeFirst(forTrait.label)},
+      //       ]
+      //     },
+      //     mavoMultipleTrait,
+      //   ];
+      // },
+      // getOnlyPropMavoTrait() {
+      //   return [idTrait, titleTrait, forTrait, mavoPropertyTrait];
+      // },
     }, {
       isComponent(el) {
         if(el.tagName == 'LABEL'){
