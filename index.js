@@ -84,8 +84,8 @@ pnm.addButton('options', {
     run: function(editor, sender) {
         sender && sender.set('active', false);
 
-        var html = editor.runCommand('gjs-get-inlined-html');
-        
+        var html = editor.runCommand('get-inlined-html');
+
         var newWindow = window.open();
 
         var script = newWindow.document.createElement("script");
@@ -132,7 +132,7 @@ pnm.addButton('options', {
     run: function(editor, sender) {
         sender && sender.set('active', false);
 
-        var html = editor.runCommand('gjs-get-inlined-html');
+        var html = editor.runCommand('get-inlined-html');
         var fullHTML = `<html>
         <head>
           <script src="https://get.mavo.io/mavo.js"></script>

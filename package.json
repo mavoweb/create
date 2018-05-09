@@ -1,6 +1,6 @@
 {
   "name": "grapesjs-mavo",
-  "version": "0.1.79",
+  "version": "0.1.86",
   "description": "Mavo Create",
   "main": "dist/grapesjs-mavo.min.js",
   "scripts": {
@@ -49,6 +49,7 @@
     "grapesjs-component-countdown": "^0.1.2",
     "grapesjs-navbar": "^0.1.5",
     "grapesjs-plugin-export": "^0.1.5",
-    "grapesjs-plugin-filestack": "^0.1.1"
+    "grapesjs-plugin-filestack": "^0.1.1",
+    "juice": "^4.1.1"
   }
 }
