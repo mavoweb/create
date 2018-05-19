@@ -20,7 +20,7 @@ export default grapesjs.plugins.add('gjs-mavo', (editor, opts = {}) => {
     //basic: 'column1', 'column2', 'column3', 'column3-7', 'text', 'link', 'image', 'video', 'map'
     //extra: 'link-block', 'quote', 'text-basic'
     //form: 'form', 'input', 'textarea', 'select', 'button', 'label', 'checkbox', 'radio'
-    blocks: ['column1', 'column2', 'column3', 'column3-7', 'divider', 'text', 'link', 'image', 'video', 'map', 'link-block', 'quote', 'text-basic', 'form', 'input', 'textarea', 'select', 'button', 'label', 'checkbox', 'radio'],
+    blocks: ['column1', 'ordered-list', 'unordered-list', 'list-item', 'column2', 'column3', 'column3-7', 'divider', 'text', 'link', 'image', 'video', 'map', 'link-block', 'quote', 'text-basic', 'form', 'input', 'textarea', 'select', 'button', 'label', 'checkbox', 'radio'],
     
     // Modal import title
     modalImportTitle: 'Import',

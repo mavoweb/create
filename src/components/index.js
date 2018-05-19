@@ -218,6 +218,116 @@ export default (editor, config = {}) => {
   }
 
 
+  domc.addType('ordered-list', {
+    model: defaultModel.extend({
+      defaults: {
+        ...defaultModel.prototype.defaults,
+        'custom-name': 'Ordered List',
+        traits: [idTrait, 
+          {
+            type: 'select',
+            label: 'Type',
+            name: 'type',
+            options: [
+              {value: '1', name: 'Numerical'},
+              {value: 'i', name: 'Roman (lowercase)'},
+              {value: 'I', name: 'Roman (uppercase)'},
+              {value: 'a', name: 'Letter (lowercase)'},
+              {value: 'A', name: 'Letter (uppercase)'},
+            ]
+          },
+          mavoPropertyTrait,
+          {
+            type: 'select',
+            label: c.labelMvAttribute,
+            name: 'mv-attribute',
+            options: [{value: "", name: "Text Content (default)"},
+              {value: idTrait.name, name: capitalizeFirst(idTrait.label)},
+            ]
+          },
+          mavoMultipleTrait],
+      },
+    }, {
+      isComponent(el) {
+        if(el.tagName == 'OL'){
+          return {type: 'ordered-list'};
+        }
+      },
+    }),
+
+    view: defaultView,
+  });
+
+   domc.addType('unordered-list', {
+    model: defaultModel.extend({
+      defaults: {
+        ...defaultModel.prototype.defaults,
+        'custom-name': 'Unordered List',
+        traits: [idTrait, 
+          {
+            type: 'select',
+            label: 'Type',
+            name: 'type',
+            options: [
+              {value: 'disk', name: 'Filled Circle'},
+              {value: 'circle', name: 'Unfilled Circle'},
+              {value: 'square', name: 'Square'},
+              {value: 'none', name: 'No Bullets'},
+            ]
+          },
+          mavoPropertyTrait,
+          {
+            type: 'select',
+            label: c.labelMvAttribute,
+            name: 'mv-attribute',
+            options: [{value: "", name: "Text Content (default)"},
+              {value: idTrait.name, name: capitalizeFirst(idTrait.label)},
+            ]
+          },
+          mavoMultipleTrait],
+      },
+    }, {
+      isComponent(el) {
+        if(el.tagName == 'UL'){
+          return {type: 'unordered-list'};
+        }
+      },
+    }),
+
+    view: defaultView,
+  });
+
+  domc.addType('list-item', {
+    model: defaultModel.extend({
+      defaults: {
+        ...defaultModel.prototype.defaults,
+        'custom-name': 'List Item',
+        traits: [idTrait, 
+          mavoPropertyTrait,
+          {
+            type: 'select',
+            label: c.labelMvAttribute,
+            name: 'mv-attribute',
+            options: [{value: "", name: "Text Content (default)"},
+              {value: idTrait.name, name: capitalizeFirst(idTrait.label)},
+            ]
+          },
+          mavoMultipleTrait],
+      },
+    }, {
+      isComponent(el) {
+        if(el.tagName == 'LI'){
+          return {type: 'list-item'};
+        }
+      },
+    }),
+
+    view: defaultView,
+  });
+
+
+
+
   // //add listeners to text component for expressions
   // var originalTextComp = domc.getType('text');
   // // var originalTextModel = originalTextComp.model;

@@ -104,6 +104,36 @@ export default (editor, config) => {
     },
   });
 
+  //lists
+  toAdd('ordered-list') && bm.add('ordered-list', {
+    label: 'Ordered List',
+    category: 'Lists',
+    attributes: {class:'fa fa-list-ol'},
+    content: `<ol>
+      <li><p style='width:40%;'>First Item</p></li>
+      <li><p style='width:40%;'>Second Item</p></li>
+      <li><p style='width:40%;'>Third Item</p></li>
+      </ol>`,
+  });
+
+    toAdd('unordered-list') && bm.add('unordered-list', {
+    label: 'Unordered List',
+    category: 'Lists',
+    attributes: {class:'fa fa-list-ul'},
+    content: `<ul>
+      <li><p style='width:40%;'>First Item</p></li>
+      <li><p style='width:40%;'>Second Item</p></li>
+      <li><p style='width:40%;'>Third Item</p></li>
+      </ul>`,
+  });
+
+  toAdd('list-item') && bm.add('list-item', {
+    label: 'List Item',
+    category: 'Lists',
+    attributes: {class:'fa fa-minus'},
+    content: `<li><p style='width:40%;'>List Item</p></li>`,
+  });
+
 
   //structure content
   let tableStyleStr = '';
