@@ -104,10 +104,17 @@ export default (editor, config) => {
     },
   });
 
+  toAdd('section') && bm.add('section', {
+    category: 'Content',
+    label: 'Empty Section',
+    attributes: { class: 'fa fa-sticky-note-o' },
+    content: `<section class="bdg-sect"></section>`,
+  });
+
   //lists
   toAdd('ordered-list') && bm.add('ordered-list', {
     label: 'Ordered List',
-    category: 'Lists',
+    category: 'Content',
     attributes: {class:'fa fa-list-ol'},
     content: `<ol>
       <li><p style='width:40%;'>First Item</p></li>
@@ -118,7 +125,7 @@ export default (editor, config) => {
 
     toAdd('unordered-list') && bm.add('unordered-list', {
     label: 'Unordered List',
-    category: 'Lists',
+    category: 'Content',
     attributes: {class:'fa fa-list-ul'},
     content: `<ul>
       <li><p style='width:40%;'>First Item</p></li>
@@ -129,76 +136,11 @@ export default (editor, config) => {
 
   toAdd('list-item') && bm.add('list-item', {
     label: 'List Item',
-    category: 'Lists',
+    category: 'Content',
     attributes: {class:'fa fa-minus'},
     content: `<li><p style='width:40%;'>List Item</p></li>`,
   });
 
-
-  //structure content
-  let tableStyleStr = '';
-  let cellStyleStr = '';
-  let tableStyle = c.tableStyle || {};
-  let cellStyle = c.cellStyle || {};
-  
-  for (let prop in tableStyle){
-    tableStyleStr += `${prop}: ${tableStyle[prop]}; `;
-  }
-  for (let prop in cellStyle){
-    cellStyleStr += `${prop}: ${cellStyle[prop]}; `;
-  }
-
-  toAdd('column1') && bm.add('column1', {
-    label: c.labelColumn1,
-    category: c.categoryColumn1,
-    attributes: {class:'gjs-fonts gjs-f-b1'},
-    content: `<table style="${tableStyleStr}">
-      <tr>
-        <td style="${cellStyleStr}"><p class="gjs-fonts gjs-f-text" style="padding:10px;">Insert content here</p></td>
-      </tr>
-      </table>`,
-  });
-
-  toAdd('column2') && bm.add('column2', {
-    label: c.labelColumn2,
-    category: c.categoryColumn2,
-    attributes: {class:'gjs-fonts gjs-f-b2'},
-    content: `<table style="${tableStyleStr}">
-      <tr>
-        <td style="${cellStyleStr} width: 50%">
-          <p class="gjs-fonts gjs-f-text" style="padding:10px;">Insert content here</p>
-        </td>
-        <td style="${cellStyleStr} width: 50%">
-          <p class="gjs-fonts gjs-f-text" style="padding:10px;">Insert content here</p>
-        </td>
-      </tr>
-      </table>`,
-  });
-
-  toAdd('column3') && bm.add('column3', {
-    label: c.labelColumn3,
-    category: c.categoryColumn3,
-    attributes: {class:'gjs-fonts gjs-f-b3'},
-    content: `<table style="${tableStyleStr}">
-      <tr>
-        <td style="${cellStyleStr} width: 33.3333%"><p class="gjs-fonts gjs-f-text" style="padding:10px;">Insert content here</p></td>
-        <td style="${cellStyleStr} width: 33.3333%"><p class="gjs-fonts gjs-f-text" style="padding:10px;">Insert content here</p></td>
-        <td style="${cellStyleStr} width: 33.3333%"><p class="gjs-fonts gjs-f-text" style="padding:10px;">Insert content here</p></td>
-      </tr>
-      </table>`,
-  });
-
-  toAdd('column3-7') && bm.add('column3-7', {
-    label: c.labelColumn37,
-    category: c.categoryColumn37,
-    attributes: {class:'gjs-fonts gjs-f-b37'},
-    content: `<table style="${tableStyleStr}">
-      <tr>
-        <td style="${cellStyleStr} width:30%"><p class="gjs-fonts gjs-f-text" style="padding:10px;">Insert content here</p></td>
-        <td style="${cellStyleStr} width:70%"><p class="gjs-fonts gjs-f-text" style="padding:10px;">Insert content here</p></td>
-      </tr>
-      </table>`,
-  });
 
   toAdd('divider') && bm.add('divider', {
     label: c.labelDivider,
@@ -332,6 +274,72 @@ export default (editor, config) => {
     attributes: {class:'fa fa-dot-circle-o'},
     category: c.formCategory,
     content: '<input type="radio" class="radio"/>',
+  });
+
+
+    //structured content
+  let tableStyleStr = '';
+  let cellStyleStr = '';
+  let tableStyle = c.tableStyle || {};
+  let cellStyle = c.cellStyle || {};
+  
+  for (let prop in tableStyle){
+    tableStyleStr += `${prop}: ${tableStyle[prop]}; `;
+  }
+  for (let prop in cellStyle){
+    cellStyleStr += `${prop}: ${cellStyle[prop]}; `;
+  }
+
+  toAdd('column1') && bm.add('column1', {
+    label: c.labelColumn1,
+    category: c.categoryColumn1,
+    attributes: {class:'gjs-fonts gjs-f-b1'},
+    content: `<table style="${tableStyleStr}">
+      <tr>
+        <td style="${cellStyleStr}"><p class="gjs-fonts gjs-f-text" style="padding:10px;">Insert content here</p></td>
+      </tr>
+      </table>`,
+  });
+
+  toAdd('column2') && bm.add('column2', {
+    label: c.labelColumn2,
+    category: c.categoryColumn2,
+    attributes: {class:'gjs-fonts gjs-f-b2'},
+    content: `<table style="${tableStyleStr}">
+      <tr>
+        <td style="${cellStyleStr} width: 50%">
+          <p class="gjs-fonts gjs-f-text" style="padding:10px;">Insert content here</p>
+        </td>
+        <td style="${cellStyleStr} width: 50%">
+          <p class="gjs-fonts gjs-f-text" style="padding:10px;">Insert content here</p>
+        </td>
+      </tr>
+      </table>`,
+  });
+
+  toAdd('column3') && bm.add('column3', {
+    label: c.labelColumn3,
+    category: c.categoryColumn3,
+    attributes: {class:'gjs-fonts gjs-f-b3'},
+    content: `<table style="${tableStyleStr}">
+      <tr>
+        <td style="${cellStyleStr} width: 33.3333%"><p class="gjs-fonts gjs-f-text" style="padding:10px;">Insert content here</p></td>
+        <td style="${cellStyleStr} width: 33.3333%"><p class="gjs-fonts gjs-f-text" style="padding:10px;">Insert content here</p></td>
+        <td style="${cellStyleStr} width: 33.3333%"><p class="gjs-fonts gjs-f-text" style="padding:10px;">Insert content here</p></td>
+      </tr>
+      </table>`,
+  });
+
+  toAdd('column3-7') && bm.add('column3-7', {
+    label: c.labelColumn37,
+    category: c.categoryColumn37,
+    attributes: {class:'gjs-fonts gjs-f-b37'},
+    content: `<table style="${tableStyleStr}">
+      <tr>
+        <td style="${cellStyleStr} width:30%"><p class="gjs-fonts gjs-f-text" style="padding:10px;">Insert content here</p></td>
+        <td style="${cellStyleStr} width:70%"><p class="gjs-fonts gjs-f-text" style="padding:10px;">Insert content here</p></td>
+      </tr>
+      </table>`,
   });
 
 }

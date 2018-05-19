@@ -11,7 +11,7 @@ var editor = grapesjs.init({
   plugins: ['gjs-mavo'],
   pluginsOpts: {
     'gjs-mavo': {
-      blocks: ['column1', 'ordered-list', 'unordered-list', 'list-item', 'column2', 'column3', 'column3-7', 'divider', 'text', 'link', 'image', 'map', 'text-basic', 'input', 'textarea', 'select', 'label', 'checkbox'],
+      blocks: ['column1', 'section', 'ordered-list', 'unordered-list', 'list-item', 'column2', 'column3', 'column3-7', 'divider', 'text', 'link', 'image', 'map', 'text-basic', 'input', 'textarea', 'select', 'label', 'checkbox'],
       navbarOpts: false,
       countdownOpts: false,
       useRequiredTrait: false,
