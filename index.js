@@ -376,6 +376,32 @@ $('body').on('click', '.expr-title', function () {
   $("#expression-text-box").focus();
 });
 
+$("#copy-expression-button").on("click", function(e){
+  e.preventDefault();
+  var copyText = '[' + $("#expression-text-box").val().trim() + ']';
+  var textArea = document.createElement("textarea");
+  textArea.style.position = 'absolute';
+  textArea.style.left = '-9999px';
+  textArea.innerHTML = copyText;
+  var parent = document.getElementById('expressions-modal-text-box-container');
+  parent.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+
+  try {
+    var successful = document.execCommand('copy');
+    var msg = successful ? 'successful' : 'unsuccessful';
+    if (msg == 'unsuccessful') {
+      console.log('Unable to copy');
+    }
+  } catch (err) {
+    console.log('Unable to copy');
+  }
+
+  parent.removeChild(textArea);
+});
+
+
 $("#expression-text-box").on('keyup', function (e) {
   var expContent = $("#expression-text-box").val();
   if (expContent[expContent.length-1] == " " || expContent.length < 1) {
