@@ -423,6 +423,8 @@ $("#insert-expression-button").on("click", function(e){
   var oldContent = currentSelectedComponent.get('content');
   var newContent = oldContent + ' ' + exp;
   currentSelectedComponent.set('content', newContent);
+
+  $('#expressionsModal').modal('hide');
 });
 
 $("#expression-text-box").on('keyup', function (e) {
