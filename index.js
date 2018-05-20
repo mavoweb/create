@@ -318,7 +318,6 @@ var parseExpressionsJsonAndSet = function() {
             majorText = majorText + args[k]['name'] + ', '
           }
           majorText = majorText.substring(0, majorText.length-2) + ')';
-          majorText = majorText + ')';
           valueText = valueText + '()';
           functionsContainer.append(`<div class="expr-title" data-value="`+ valueText + `">` + majorText +`<p class="expr-description"> `+minorText+`</p></div>`);
         } else if (role == 'operator') {
