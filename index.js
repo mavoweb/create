@@ -41,6 +41,7 @@ var editor = grapesjs.init({
 
 });
 
+var currentSelectedComponent;
 
 var functionsContainer = $('#expr-functions-container');
 var operatorsContainer = $('#expr-operators-container');
@@ -280,6 +281,16 @@ pnm.addButton('options', {
   command: {
     run: function(editor, sender) {
         sender && sender.set('active', false);
+        //get selected element from editor
+        var selectedComp = editor.getSelected();
+        if (selectedComp && selectedComp.attributes && selectedComp.attributes.type == 'text') {
+          currentSelectedComponent = selectedComp;
+          $('#insert-expression-button').removeClass('hidden');
+        } else {
+          currentSelectedComponent == undefined;
+          $('#insert-expression-button').addClass('hidden');
+        }
+
         $("#expression-text-box").val("");
         $("#expression-text-box").popover();
         var popover = $('#expression-text-box').data('bs.popover');
@@ -293,7 +304,9 @@ pnm.addButton('options', {
           var prop = props[i];
           propsContainer.append(`<div class="expr-title" data-value="`+ prop + `">` + prop +`</div>`);
         }
+
         $('#expressionsModal').modal('show');
+
     }
   },
   attributes: {
@@ -401,8 +414,22 @@ $("#copy-expression-button").on("click", function(e){
   parent.removeChild(textArea);
 });
 
+$("#insert-expression-button").on("click", function(e){
+  e.preventDefault();
+  var exp = '[' + $("#expression-text-box").val().trim() + ']';
+  if (!currentSelectedComponent) {
+    return;
+  }
+  var oldContent = currentSelectedComponent.get('content');
+  var newContent = oldContent + ' ' + exp;
+  currentSelectedComponent.set('content', newContent);
+});
 
 $("#expression-text-box").on('keyup', function (e) {
+  updateExpressionModalPopover();
+});
+
+var updateExpressionModalPopover = function() {
   var expContent = $("#expression-text-box").val();
   if (expContent[expContent.length-1] == " " || expContent.length < 1) {
     //if white space at end:
@@ -451,7 +478,7 @@ $("#expression-text-box").on('keyup', function (e) {
   var popoverTitle = $('#popover-title-html').html();
   popover.config.title = popoverTitle;
   popover.setContent();
-});
+}
 
 var resetPopover = function() {
   var popoverContentCols = $("#popover-content-html td");
