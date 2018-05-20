@@ -80,7 +80,7 @@ export default (editor, config) => {
     category: 'Content',
     label: 'Text section',
     attributes: { class: 'gjs-fonts gjs-f-h1p' },
-    content: `<section class="bdg-sect">
+    content: `<section style='padding: 70px 0px;'>
       <h1 class="heading">Insert title here</h1>
       <p class="paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
       </section>`
@@ -108,7 +108,7 @@ export default (editor, config) => {
     category: 'Content',
     label: 'Empty Section',
     attributes: { class: 'fa fa-sticky-note-o' },
-    content: `<section class="bdg-sect"></section>`,
+    content: `<section style="padding: 70px 0px;"></section>`,
   });
 
   //lists
