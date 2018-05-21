@@ -48,6 +48,7 @@ var operatorsContainer = $('#expr-operators-container');
 var specialsContainer = $('#expr-specials-container');
 var propsContainer = $('#expr-properties-container');
 
+var allMavoProperties = new Set();
 var mvStorage = 'local'; //what goes into mv-app
 var mvStorageChoice = 'local'; //the choice (value) from the dropdown menu in the modal
 var mvStorageDetail; //for github and dropbox, what the user enters in the box in the modal
@@ -297,7 +298,13 @@ editor.on('component:update:traits', model => {
     var val = trait.get('value');
     var name = trait.get('name');
     if (name == 'property' && val.trim() != '') {
-      trait.set('value', val.toLowerCase().replace(/\s+/g, ''));
+      var newVal = val.toLowerCase().replace(/\s+/g, '');
+      trait.set('value', newVal);
+      allMavoProperties.add(newVal);
+      propsContainer.empty();
+      for (var prop of allMavoProperties) {
+        propsContainer.append(`<div class="expr-title" data-value="`+ prop + `">` + prop +`</div>`);
+      }
     }
   });
 });
@@ -327,12 +334,12 @@ pnm.addButton('options', {
         popover.config.content = popoverContent;
         var popoverTitle = $('#popover-title-html').html();
         popover.config.title = popoverTitle;
-        var props = getAllMavoProperties()
-        propsContainer.empty();
-        for (var i=0; i<props.length; i++) {
-          var prop = props[i];
-          propsContainer.append(`<div class="expr-title" data-value="`+ prop + `">` + prop +`</div>`);
-        }
+        // var props = getAllMavoProperties()
+        // propsContainer.empty();
+        // for (var i=0; i<props.length; i++) {
+        //   var prop = props[i];
+        //   propsContainer.append(`<div class="expr-title" data-value="`+ prop + `">` + prop +`</div>`);
+        // }
 
         $('#expressionsModal').modal('show');
 
@@ -402,6 +409,23 @@ var getAllMavoProperties = function() {
   }
   return properties;
 }
+
+// var setAllMavoProperties = function() {
+//   var canvas = editor.Canvas.getBody();
+//   var elements = canvas.querySelectorAll('[property]');
+//   var properties = [];
+//   for (var i=0; i<elements.length; i++) {
+//     var element = elements[i];
+//     properties.push(element.getAttribute('property'));
+//   }
+//   allMavoProperties = new Set(properties);
+//   propsContainer.empty();
+//   for (var prop of allMavoProperties) {
+//     propsContainer.append(`<div class="expr-title" data-value="`+ prop + `">` + prop +`</div>`);
+//   }
+// }
+
+// setAllMavoProperties();
 
 $('body').on('click', '.expr-title', function () {
   var dataValue = $(this).data('value');
