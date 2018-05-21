@@ -463,23 +463,32 @@ var updateExpressionModalPopover = function() {
     }
   }
 
+  var countHidden = 0;
   var popoverTitlesCols = $("#popover-title-html td");
   for (c=0; c<popoverTitlesCols.length; c++) {
     var col = popoverTitlesCols[c];
     if (counts[c][0] == counts[c][1]) {
       $(col).addClass('hidden');
+      countHidden += 1;
     } else {
       $(col).removeClass('hidden');
     }
   }
 
-  $("#expression-text-box").popover();
-  var popover = $('#expression-text-box').data('bs.popover');
-  var popoverContent = $('#popover-content-html').html();
-  popover.config.content = popoverContent;
-  var popoverTitle = $('#popover-title-html').html();
-  popover.config.title = popoverTitle;
-  popover.setContent();
+  var restore = countHidden == popoverTitlesCols.length ? true : false;
+  console.log(countHidden);
+  console.log(restore);
+  if (restore) {
+    resetPopover()
+  } else {
+    $("#expression-text-box").popover();
+    var popover = $('#expression-text-box').data('bs.popover');
+    var popoverContent = $('#popover-content-html').html();
+    popover.config.content = popoverContent;
+    var popoverTitle = $('#popover-title-html').html();
+    popover.config.title = popoverTitle;
+    popover.setContent();
+  }
 }
 
 var resetPopover = function() {
