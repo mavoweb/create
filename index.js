@@ -274,6 +274,35 @@ $('#settingsModal').on('hidden.bs.modal', function (e) {
 // editor.on('component:update:showExpressionsModal', model => {
 // });
 
+editor.on('component:update:traits', model => {
+  var noProp = false;
+  console.log('triggered');
+  //don't allow mv-multiple of mv-attribute to be set when there
+  // is not property name
+  // model.get('traits').each(function(trait){
+  //   var val = trait.get('value');
+  //   var name = trait.get('name');
+  //   if (name == 'property' && val.trim() == '') {
+  //     noProp = true;
+  //   }
+  //   if (noProp && name == 'mv-multiple') {
+  //     trait.set('value', false);
+  //   }
+  //   if (noProp && name == 'mv-attribute') {
+  //     trait.set('value', '');
+  //   }
+  // });
+  //only allow lowercase, no spaces for property names
+  model.get('traits').each(function(trait){
+    var val = trait.get('value');
+    var name = trait.get('name');
+    if (name == 'property' && val.trim() != '') {
+      trait.set('value', val.toLowerCase().replace(/\s+/g, ''));
+    }
+  });
+});
+
+
 //expressions modal
 pnm.addButton('options', {
   id: 'make-expressions',
