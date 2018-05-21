@@ -15,6 +15,19 @@ body, html {
 	margin-right:30px;
 }
 
+.gjs-trt-trait .gjs-label {
+  width: 40%;
+}
+
+.gjs-trt-trait .gjs-field {
+  width: 60%;
+}
+
+
+.gjs-trt-trait .gjs-field-checkbox {
+  height: 1.5em;
+}
+
 /*components css*/
 .bdg-sect{
   padding-top:70px;
