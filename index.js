@@ -476,8 +476,6 @@ var updateExpressionModalPopover = function() {
   }
 
   var restore = countHidden == popoverTitlesCols.length ? true : false;
-  console.log(countHidden);
-  console.log(restore);
   if (restore) {
     resetPopover()
   } else {
