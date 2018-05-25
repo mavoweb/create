@@ -572,6 +572,53 @@ $('#expressionsModal').on('hidden.bs.modal', function (e) {
 });
 
 
+//put popover inline
+var canv = editor.Canvas.getBody();
+var canvas = $(canv)
+canvas.on("keyup", function(e){
+  var textTagNames = ['P', 'DIV', 'TEXT', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
+  if (e.which == 219 && textTagNames.includes(e.target.tagName)) {
+    var elem = $(e.target);
+    elem.attr('data-toggle', 'manual');
+    elem.attr('data-html', 'true');
+    elem.attr('data-placement', 'bottom');
+    // elem.attr('data-container', '');
+    // elem.addClass('popover-lower');
+
+    elem.popover({placement: function(context, src) {
+        $(context).addClass('popover-lower');
+        return 'top';
+    }});
+    var popover = elem.data('bs.popover');
+    // popover.tip.addClass('popover-lower');
+    var popoverContent = $('#popover-content-html').html();
+    popover.config.content = popoverContent;
+    var popoverTitle = $('#popover-title-html').html();
+    popover.config.title = popoverTitle;
+    popover.setContent();
+
+    var removePopover = function() {
+      elem.popover('hide')
+      elem.removeAttr('data-toggle');
+      elem.removeAttr('data-html');
+      elem.removeAttr('data-placement');
+      // popover.tip().removeClass('popover-lower');
+    }
+
+    elem.on("keyup", function(e){
+      if (e.which == 221) {
+        removePopover();
+      }
+    });
+    elem.on("blur", function(e){
+      console.log('blur');
+      removePopover();
+    });
+
+    elem.popover('show')
+  }
+});
+
 
 // Add and beautify tooltips
 [['sw-visibility', 'Show Borders'], ['undo', 'Undo'], ['redo', 'Redo'], ['gjs-open-import-webpage', 'Import Template'], ['canvas-clear', 'Clear canvas']].forEach(function(item) {

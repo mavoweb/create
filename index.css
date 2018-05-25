@@ -81,7 +81,11 @@ body, html {
 }
 
 .popover {
-	max-width: 80%
+	max-width: 80%;
+}
+
+.popover-lower {
+  margin-top: 40px;
 }
 
 .popver-table {
