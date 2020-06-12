@@ -4,4 +4,3 @@ private/
 .eslintrc
 *.log
 _index.html
-package-lock.json
